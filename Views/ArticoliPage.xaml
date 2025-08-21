@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Pseven.Views.ArticoliPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:Pseven.Models"
+    xmlns:vm="clr-namespace:Pseven.ViewModels"
+    Title="{Binding Title}"
+    x:DataType="vm:ArticoliViewModel">
+
+    <Grid Padding="20">
+        <CollectionView ItemsSource="{Binding Articoli}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Articolo">
+                    <Frame>
+                        <StackLayout>
+                            <Label Text="{Binding Descrizione}" />
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

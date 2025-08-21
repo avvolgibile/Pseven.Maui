@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Pseven.Views.MiniFormPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:Pseven.Controls"
+    xmlns:converters="clr-namespace:Pseven.Converters"
+    xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:etichette="clr-namespace:Pseven.Etichette"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:Pseven.ViewModels"
+    Title="{Binding Title}"
+    x:DataType="vm:OrdineViewModel">
+
+    <Grid
+        Padding="10"
+        ColumnDefinitions="Auto,*,Auto,*,Auto,Auto"
+        ColumnSpacing="10"
+        RowDefinitions="*,*,*,*,*,*,*,*,*">
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            Text="Colore"
+            VerticalOptions="Center" />
+        <controls:CustomSfComboBox
+            Grid.Row="0"
+            Grid.Column="1"
+            Grid.ColumnSpan="5"
+            DisplayMemberPath="CodiceColore"
+            HeightRequest="40"
+            HorizontalOptions="FillAndExpand"
+            IsEditable="True"
+            IsFilteringEnabled="True"
+            ItemsSource="{Binding DettaglioDocumento.Articolo.Colori}"
+            SelectedItem="{Binding Colore}"
+            SelectionChangedCommand="{Binding ColoreSelezionatoCommand}"
+            VerticalOptions="Center" />
+        <Label
+            Grid.Row="1"
+            Grid.Column="0"
+            IsVisible="{Binding ControlliInterfaccia.Varie1Visible}"
+            Text="Varie1"
+            VerticalOptions="Center" />
+        <controls:CustomSfComboBox
+            Grid.Row="1"
+            Grid.Column="1"
+            Grid.ColumnSpan="5"
+            HeightRequest="40"
+            HorizontalOptions="FillAndExpand"
+            IsEditable="False"
+            IsVisible="{Binding ControlliInterfaccia.Varie1Visible}"
+            ItemsSource="{Binding ControlliInterfaccia.ListaVarie1}"
+            SelectedItem="{Binding DettaglioDocumento.Varie1}"
+            SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
+            VerticalOptions="Center" />
+        <Label
+            Grid.Row="2"
+            Grid.Column="0"
+            IsVisible="{Binding ControlliInterfaccia.VersioneVisible}"
+            Text="Versione"
+            VerticalOptions="Center" />
+        <controls:CustomSfComboBox
+            Grid.Row="2"
+            Grid.Column="1"
+            Grid.ColumnSpan="5"
+            HeightRequest="40"
+            HorizontalOptions="FillAndExpand"
+            IsEditable="False"
+            IsVisible="{Binding ControlliInterfaccia.VersioneVisible}"
+            ItemsSource="{Binding ControlliInterfaccia.ListaVersione}"
+            SelectedItem="{Binding DettaglioDocumento.Versione}"
+            SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
+            VerticalOptions="Center" />
+        <Label
+            Grid.Row="3"
+            Grid.Column="0"
+            IsVisible="{Binding ControlliInterfaccia.LVisible}"
+            Text="{Binding ControlliInterfaccia.LLabel}"
+            VerticalOptions="Center" />
+        <controls:CustomEntry
+            Grid.Row="3"
+            Grid.Column="1"
+            Command="{Binding EseguiAggiornaEtichettaCommand}"
+            HeightRequest="40"
+            HorizontalOptions="FillAndExpand"
+            IsVisible="{Binding ControlliInterfaccia.LVisible}"
+            Text="{Binding DettaglioDocumento.LNumber, Mode=TwoWay}"
+            VerticalOptions="Center" />
+        <Label
+            Grid.Row="3"
+            Grid.Column="2"
+            IsVisible="{Binding ControlliInterfaccia.HcVisible}"
+            Text="{Binding ControlliInterfaccia.HLabel}"
+            VerticalOptions="Center" />
+        <controls:CustomEntry
+            Grid.Row="3"
+            Grid.Column="3"
+            Command="{Binding EseguiAggiornaEtichettaCommand}"
+            HeightRequest="40"
+            HorizontalOptions="FillAndExpand"
+            IsVisible="{Binding ControlliInterfaccia.HcVisible}"
+            Text="{Binding DettaglioDocumento.HNumber, Mode=TwoWay}"
+            VerticalOptions="Center" />
+        <StackLayout
+            Grid.Row="3"
+            Grid.Column="4"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="Center"
+            IsVisible="{Binding ControlliInterfaccia.LuceFinitaVisible}"
+            Orientation="Horizontal"
+            RadioButtonGroup.GroupName="LuceFinita"
+            RadioButtonGroup.SelectedValue="{Binding LuceFinitaSelezione}">
+            <RadioButton
+                Content="Luce"
+                Value="true" />
+            <RadioButton
+                Content="Finita"
+                IsChecked="True"
+                Value="false" />
+        </StackLayout>
+        <Label
+            Grid.Row="4"
+            Grid.Column="0"
+            IsVisible="{Binding ControlliInterfaccia.L2Visible}"
+            Text="L2"
+            VerticalOptions="Center" />
+        <controls:CustomEntry
+            Grid.Row="4"
+            Grid.Column="1"
+            Command="{Binding EseguiAggiornaEtichettaCommand}"
+            HeightRequest="40"
+            HorizontalOptions="FillAndExpand"
+            IsVisible="{Binding ControlliInterfaccia.L2Visible}"
+            Text="{Binding DettaglioDocumento.L2Number, Mode=TwoWay}"
+            VerticalOptions="Center" />
+        <Label
+            Grid.Row="4"
+            Grid.Column="2"
+            IsVisible="{Binding ControlliInterfaccia.SpDxVisible}"
+            Text="SpDX"
+            VerticalOptions="Center" />
+        <controls:CustomEntry
+            Grid.Row="4"
+            Grid.Column="3"
+            Command="{Binding EseguiAggiornaEtichettaCommand}"
+            HeightRequest="40"
+            HorizontalOptions="FillAndExpand"
+            IsVisible="{Binding ControlliInterfaccia.SpDxVisible}"
+            Text="{Binding DettaglioDocumento.SpDx, Mode=TwoWay}"
+            VerticalOptions="Center" />
+        <StackLayout
+            Grid.Row="4"
+            Grid.Column="4"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="Center"
+            Orientation="Horizontal"
+            IsVisible="{Binding ControlliInterfaccia.AperturaCentraleVisible}"
+            Spacing="10">
+            <controls:CustomCheckBox
+                Command="{Binding EseguiAggiornaEtichettaCommand}"
+                IsChecked="{Binding DettaglioDocumento.AperturaCentrale}" />
+            <Label
+                Text="Apertura Centrale"
+                VerticalOptions="Center" />
+        </StackLayout>
+        <Label
+            Grid.Row="5"
+            Grid.Column="0"
+            Text="Comandi"
+            IsVisible="{Binding ControlliInterfaccia.ComandiVisible}"
+            VerticalOptions="Center" />
+        <controls:CustomSfComboBox
+            Grid.Row="5"
+            IsVisible="{Binding ControlliInterfaccia.ComandiVisible}"
+            Grid.Column="1"
+            HeightRequest="40"
+            HorizontalOptions="FillAndExpand"
+            IsClearButtonVisible="False"
+            ItemsSource="{Binding ControlliInterfaccia.ListaComandi}"
+            SelectedItem="{Binding DettaglioDocumento.Comandi}"
+            SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
+            VerticalOptions="Center" />
+        <Label
+            Grid.Row="5"
+            Grid.Column="2"
+            Text="{Binding ControlliInterfaccia.HcLabel}"
+            VerticalOptions="Center" />
+        <controls:CustomEntry
+            Grid.Row="5"
+            Grid.Column="3"
+            Command="{Binding EseguiAggiornaEtichettaCommand}"
+            HeightRequest="40"
+            HorizontalOptions="FillAndExpand"
+            Text="{Binding DettaglioDocumento.Hc, Mode=TwoWay}"
+            VerticalOptions="Center" />
+        <Label
+            Grid.Row="5"
+            Grid.Column="4"
+            IsVisible="{Binding ControlliInterfaccia.GuideVisible}"
+            Text="Guide"
+            VerticalOptions="Center" />
+        <StackLayout
+            Grid.Row="5"
+            Grid.Column="5"
+            IsVisible="{Binding ControlliInterfaccia.GuideVisible}"
+            Orientation="Horizontal">
+            <RadioButton
+                Content="+"
+                HorizontalOptions="FillAndExpand"
+                IsChecked="True"
+                VerticalOptions="Center"
+                Value="true" />
+            <RadioButton
+                Content="Senza"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Center"
+                Value="false" />
+        </StackLayout>
+        <Label
+            Grid.Row="6"
+            Grid.Column="0"
+            Text="Attacchi"
+            IsVisible="{Binding ControlliInterfaccia.AttacchiVisible}"
+            VerticalOptions="Center" />
+        <controls:CustomSfComboBox
+            IsVisible="{Binding ControlliInterfaccia.AttacchiVisible}"
+            Grid.Row="6"
+            Grid.Column="1"
+            HeightRequest="40"
+            HorizontalOptions="FillAndExpand"
+            IsClearButtonVisible="False"
+            ItemsSource="{Binding ControlliInterfaccia.ListaAttacchi}"
+            SelectedItem="{Binding DettaglioDocumento.Attacchi}"
+            SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
+            VerticalOptions="Center" />
+        <Label
+            Grid.Row="6"
+            Grid.Column="2"
+            Text="Pezzi"
+            VerticalOptions="Center" />
+        <controls:CustomEntry
+            Grid.Row="6"
+            Grid.Column="3"
+            Command="{Binding EseguiAggiornaEtichettaCommand}"
+            HeightRequest="40"
+            HorizontalOptions="FillAndExpand"
+            Text="{Binding DettaglioDocumento.Pezzi, Mode=TwoWay}"
+            VerticalOptions="Center" />
+        <Label
+            Grid.Row="6"
+            Grid.Column="4"
+            Text="Rif"
+            VerticalOptions="Center" />
+        <controls:CustomEntry
+            Grid.Row="6"
+            Grid.Column="5"
+            Command="{Binding EseguiAggiornaEtichettaCommand}"
+            HeightRequest="40"
+            HorizontalOptions="FillAndExpand"
+            Text="{Binding DettaglioDocumento.Rif, Mode=TwoWay}"
+            VerticalOptions="Center" />
+        <Label
+            Grid.Row="7"
+            Grid.Column="0"
+            Text="Note"
+            VerticalOptions="Center" />
+        <controls:CustomSfComboBox
+            Grid.Row="7"
+            Grid.Column="1"
+            Grid.ColumnSpan="5"
+            HeightRequest="40"
+            HorizontalOptions="FillAndExpand"
+            ItemsSource="{Binding ControlliInterfaccia.ListaNote}"
+            SelectedItem="{Binding DettaglioDocumento.Note}"
+            SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
+            VerticalOptions="Center" />
+        <StackLayout
+            Grid.Row="8"
+            Grid.Column="0"
+            Grid.ColumnSpan="6"
+            HorizontalOptions="Center"
+            Orientation="Horizontal"
+            Spacing="10">
+            <Button
+                Command="{Binding SalvaDocumentoCommand}"
+                Text="Salva" />
+            <Button
+                Command="{Binding SalvaStampaEtichettaCommand}"
+                Text="Salva e stampa etichetta" />
+            <!--Command="{Binding PrintCommand}"-->
+            <Button
+               
+                Text="Stampa etichetta" />
+        </StackLayout>
+    </Grid>
+</ContentPage>

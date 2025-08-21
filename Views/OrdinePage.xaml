@@ -1,0 +1,1138 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<controls:BasePage
+    x:Class="Pseven.Views.OrdinePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:Pseven.Controls"
+    xmlns:converters="clr-namespace:Pseven.Converters"
+    xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:etichette="clr-namespace:Pseven.Etichette"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:Pseven.ViewModels"
+    Title="{Binding Title}"
+    x:DataType="vm:OrdineViewModel"
+    IsMaximized="True">
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior
+            Command="{Binding AppearingCommand}"
+            EventName="Appearing" />
+    </ContentPage.Behaviors>
+    <!--<ContentPage.MenuBarItems>
+        <MenuBarItem Text="Gestione Database">
+            <MenuFlyoutItem
+                Command="{Binding ApriViewArticoliCommand}"
+                Text="Articoli" />
+        </MenuBarItem>
+        <MenuBarItem>
+            <MenuFlyoutItem
+                Command="{Binding ApriMiniFormCommand}"
+                Text="Mini Form" />
+        </MenuBarItem>
+    </ContentPage.MenuBarItems>-->
+    <Grid
+        Padding="10"
+        RowDefinitions="80,*">
+        <Grid
+            Grid.Row="0"
+            ColumnDefinitions="*,200,*">
+            <StackLayout
+                Grid.Column="0"
+                Orientation="Horizontal">
+                <StackLayout>
+                    <ImageButton
+                        HorizontalOptions="Center"
+                        Source="download.png"
+                        WidthRequest="40">
+                        <ImageButton.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="{StaticResource Primary}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="Salva" />
+                </StackLayout>
+                <StackLayout>
+                    <ImageButton
+                        HorizontalOptions="Center"
+                        Source="upload.png"
+                        WidthRequest="40">
+                        <ImageButton.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="{StaticResource Primary}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="Carica" />
+                </StackLayout>
+                <StackLayout>
+                    <ImageButton
+                        HorizontalOptions="Center"
+                        Source="send.png"
+                        WidthRequest="40">
+                        <ImageButton.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="{StaticResource Primary}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="Invia" />
+                </StackLayout>
+                <DatePicker
+                    Margin="20,0,20,0"
+                    Format="dddd MMMM yyyy"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"
+                    WidthRequest="250" />
+                <StackLayout>
+                    <ImageButton
+                        Command="{Binding ApriMiniFormCommand}"
+                        HorizontalOptions="Center"
+                        Source="mini.png"
+                        WidthRequest="40">
+                        <ImageButton.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="{StaticResource Primary}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="MiniForm" />
+                </StackLayout>
+
+            </StackLayout>
+            <Label
+                Grid.Column="1"
+                FontSize="40"
+                HorizontalOptions="CenterAndExpand"
+                Text="ORDINE"
+                VerticalOptions="CenterAndExpand" />
+            <StackLayout
+                Grid.Column="2"
+                HorizontalOptions="EndAndExpand"
+                Orientation="Horizontal">
+                <ImageButton
+                    Source="exit_to_app.png"
+                    WidthRequest="40" />
+            </StackLayout>
+        </Grid>
+        <Grid
+            Grid.Row="1"
+            ColumnDefinitions="2*,2*,*"
+            ColumnSpacing="5">
+            <StackLayout
+                Grid.Column="0"
+                Padding="5"
+                Spacing="10">
+                <Grid
+                    ColumnDefinitions="2*,*"
+                    ColumnSpacing="10"
+                    RowDefinitions="*,*,*"
+                    RowSpacing="5">
+                    <StackLayout
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Orientation="Horizontal">
+                        <Label
+                            Text="Clienti"
+                            VerticalOptions="Center"
+                            WidthRequest="70" />
+                        <controls:CustomSfComboBox
+                            DisplayMemberPath="RagioneSociale"
+                            HeightRequest="20"
+                            Scale="0.5"
+                            HorizontalOptions="FillAndExpand"
+                            IsEditable="True"
+                            IsFilteringEnabled="True"
+                            ItemsSource="{Binding Clienti}"
+                            SelectedItem="{Binding Documento.Cliente}"
+                            SelectionChangedCommand="{Binding ClienteSelezionatoCommand}" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Orientation="Horizontal">
+                        <Label
+                            Text="Articoli"
+                            VerticalOptions="Center"
+                            WidthRequest="70" />
+                        <controls:CustomSfComboBox
+                            DisplayMemberPath="Descrizione"
+                            HeightRequest="40"
+                            Scale="0.7"
+                            HorizontalOptions="FillAndExpand"
+                            IsEditable="True"
+                            IsFilteringEnabled="True"
+                            ItemsSource="{Binding Articoli}"
+                            SelectedItem="{Binding DettaglioDocumento.Articolo}"
+                            SelectionChangedCommand="{Binding ArticoloSelezionatoCommand}"
+                            Text="{Binding DescrizioneArticolo, Mode=TwoWay}"
+                            TextMemberPath="Descrizione" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Orientation="Horizontal">
+                        <Label
+                            Text="Colore"
+                            VerticalOptions="Center"
+                            WidthRequest="70" />
+                        <controls:CustomSfComboBox
+                            DisplayMemberPath="CodiceColore"
+                            HeightRequest="40"
+                            Scale="0.7"
+                            HorizontalOptions="FillAndExpand"
+                            IsEditable="True"
+                            IsFilteringEnabled="True"
+                            ItemsSource="{Binding DettaglioDocumento.Articolo.Colori}"
+                            SelectedItem="{Binding Colore}"
+                            SelectionChangedCommand="{Binding ColoreSelezionatoCommand}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Orientation="Horizontal"
+                        Spacing="10">
+                        <Button
+                            Command="{Binding NuovaEtichettaCommand}"
+                            HorizontalOptions="FillAndExpand"
+                            Scale="0.7"
+                            Text="Nuova Etichetta" />
+                        <Button
+                            Command="{Binding CpCommand}"
+                            Text="Cp" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Orientation="Horizontal"
+                        Spacing="10">
+                        <Button
+                            Command="{Binding NuovoProdottoCommand}"
+                           
+                        
+                            Scale="0.7"
+                            Text="Nuovo Prodotto" />
+                        <Button
+                            Command="{Binding ApCommand}"
+                            Text="Ap" />
+                    </StackLayout>
+                    <Button
+                        Scale="0.7"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Command="{Binding KeepCommand}"
+                        Text="Keep" />
+                </Grid>
+                <Grid
+                    ColumnDefinitions="*,*"
+                    ColumnSpacing="10"
+                    RowDefinitions="*,*,*,*,*,*,*,*,*"
+                    RowSpacing="5">
+                    <StackLayout
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        IsVisible="{Binding ControlliInterfaccia.Varie1Visible}"
+                        Orientation="Horizontal">
+                        <Label
+                            Text="Varie1"
+                            VerticalOptions="Center"
+                            WidthRequest="70" />
+                        <controls:CustomSfComboBox
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"
+                            IsEditable="False"
+                            ItemsSource="{Binding ControlliInterfaccia.ListaVarie1}"
+                            SelectedItem="{Binding DettaglioDocumento.Varie1}"
+                            SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding ControlliInterfaccia.LuceFinitaVisible}"
+                        Orientation="Horizontal"
+                        RadioButtonGroup.GroupName="LuceFinita"
+                        RadioButtonGroup.SelectedValue="{Binding LuceFinitaSelezione}">
+                        <RadioButton
+                            Content="Luce"
+                            Value="true" />
+                        <RadioButton
+                            Content="Finita"
+                            IsChecked="True"
+                            Value="false" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        IsVisible="{Binding ControlliInterfaccia.VersioneVisible}"
+                        Orientation="Horizontal">
+                        <Label
+                            Text="Versione"
+                            VerticalOptions="Center"
+                            WidthRequest="70" />
+                        <controls:CustomSfComboBox
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"
+                            IsEditable="False"
+                            ItemsSource="{Binding ControlliInterfaccia.ListaVersione}"
+                            SelectedItem="{Binding DettaglioDocumento.Versione}"
+                            SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding ControlliInterfaccia.AperturaCentraleVisible}"
+                        Orientation="Horizontal"
+                        Spacing="10">
+                        <controls:CustomCheckBox
+                            Command="{Binding EseguiAggiornaEtichettaCommand}"
+                            IsChecked="{Binding DettaglioDocumento.AperturaCentrale}" />
+                        <Label
+                            Text="Apertura Centrale"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    <Label
+                        Grid.Row="2"
+                        Grid.ColumnSpan="2"
+                        HeightRequest="30"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding ControlliInterfaccia.NoteArtVarieVisible}"
+                        Text="{Binding DettaglioDocumento.NoteArtVarie}"
+                        TextColor="Red"
+                        VerticalTextAlignment="Center" />
+                    <StackLayout
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Margin="0,0,5,0"
+                        IsVisible="{Binding ControlliInterfaccia.LVisible}"
+                        Orientation="Horizontal">
+                        <Label
+                            Text="{Binding ControlliInterfaccia.LLabel}"
+                            VerticalOptions="Center"
+                            WidthRequest="70" />
+                        <controls:CustomEntry
+                            Command="{Binding EseguiAggiornaEtichettaCommand}"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"
+                            Text="{Binding DettaglioDocumento.LNumber, Mode=TwoWay}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Margin="5,0,0,0"
+                        IsVisible="{Binding ControlliInterfaccia.HVisible}"
+                        Orientation="Horizontal">
+                        <Label
+                            Text="{Binding ControlliInterfaccia.HLabel}"
+                            VerticalOptions="Center"
+                            WidthRequest="70" />
+                        <controls:CustomEntry
+                            Command="{Binding EseguiAggiornaEtichettaCommand}"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"
+                            Text="{Binding DettaglioDocumento.HNumber, Mode=TwoWay}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Margin="0,0,5,0"
+                        IsVisible="{Binding ControlliInterfaccia.L2Visible}"
+                        Orientation="Horizontal">
+                        <Label
+                            Text="L2"
+                            VerticalOptions="Center"
+                            WidthRequest="70" />
+                        <controls:CustomEntry
+                            Command="{Binding EseguiAggiornaEtichettaCommand}"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"
+                            Text="{Binding DettaglioDocumento.L2Number, Mode=TwoWay}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Margin="5,0,0,0"
+                        IsVisible="{Binding ControlliInterfaccia.SpDxVisible}"
+                        Orientation="Horizontal">
+                        <Label
+                            Text="SpDX"
+                            VerticalOptions="Center"
+                            WidthRequest="70" />
+                        <controls:CustomEntry
+                            Command="{Binding EseguiAggiornaEtichettaCommand}"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"
+                            Text="{Binding DettaglioDocumento.SpDx, Mode=TwoWay}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        Margin="0,0,5,0"
+                        IsVisible="{Binding ControlliInterfaccia.ComandiVisible}"
+                        Orientation="Horizontal">
+                        <Label
+                            Text="Comandi"
+                            VerticalOptions="Center"
+                            WidthRequest="70" />
+                        <controls:CustomSfComboBox
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding ControlliInterfaccia.ListaComandi}"
+                            SelectedItem="{Binding DettaglioDocumento.Comandi}"
+                            SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Margin="5,0,0,0"
+                        IsVisible="{Binding ControlliInterfaccia.GuideVisible}"
+                        Orientation="Horizontal"
+                        RadioButtonGroup.GroupName="Guide"
+                        RadioButtonGroup.SelectedValue="{Binding PiuGuideSelezione}">
+                        <Label
+                            Text="Guide"
+                            VerticalOptions="Center"
+                            WidthRequest="70" />
+                        <RadioButton
+                            Content="+"
+                            HorizontalOptions="FillAndExpand"
+                            IsChecked="True"
+                            VerticalOptions="Center"
+                            Value="true" />
+                        <RadioButton
+                            Content="Senza"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="Center"
+                            Value="false" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="6"
+                        Grid.Column="0"
+                        Margin="0,0,5,0"
+                        IsVisible="{Binding ControlliInterfaccia.AttacchiVisible}"
+                        Orientation="Horizontal">
+                        <Label
+                            Text="Attacchi"
+                            VerticalOptions="Center"
+                            WidthRequest="70" />
+                        <controls:CustomSfComboBox
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding ControlliInterfaccia.ListaAttacchi}"
+                            SelectedItem="{Binding DettaglioDocumento.Attacchi}"
+                            SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="6"
+                        Grid.Column="1"
+                        Margin="5,0,0,0"
+                        IsVisible="{Binding ControlliInterfaccia.HcVisible}"
+                        Orientation="Horizontal">
+                        <Label
+                            Text="{Binding ControlliInterfaccia.HcLabel}"
+                            VerticalOptions="Center"
+                            WidthRequest="70" />
+                        <controls:CustomEntry
+                            Command="{Binding EseguiAggiornaEtichettaCommand}"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"
+                            Text="{Binding DettaglioDocumento.Hc, Mode=TwoWay}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="7"
+                        Grid.Column="0"
+                        Orientation="Horizontal">
+                        <Label
+                            Text="Rif"
+                            VerticalOptions="Center"
+                            WidthRequest="70" />
+                        <controls:CustomEntry
+                            Command="{Binding EseguiAggiornaEtichettaCommand}"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"
+                            Text="{Binding DettaglioDocumento.Rif, Mode=TwoWay}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="7"
+                        Grid.Column="1"
+                        Orientation="Horizontal">
+                        <Label
+                            Text="Pezzi"
+                            VerticalOptions="Center"
+                            WidthRequest="70" />
+                        <controls:CustomEntry
+                            Command="{Binding EseguiAggiornaEtichettaCommand}"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"
+                            Text="{Binding DettaglioDocumento.Pezzi, Mode=TwoWay}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="8"
+                        Grid.ColumnSpan="2"
+                        Orientation="Horizontal">
+                        <Label
+                            Text="Note"
+                            VerticalOptions="Center"
+                            WidthRequest="70" />
+                        <controls:CustomSfComboBox
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding ControlliInterfaccia.ListaNote}"
+                            SelectedItem="{Binding DettaglioDocumento.Note}"
+                            SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                </Grid>
+                <StackLayout
+                    Orientation="Horizontal"
+                    VerticalOptions="EndAndExpand">
+                    <StackLayout
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand">
+                        <controls:CustomTabbedPage
+                            Grid.Column="0"
+                            Drawable1Source="{Binding GraphicsDrawable1}"
+                            Drawable2Source="{Binding GraphicsDrawable2}"
+                            Drawable3Source="{Binding GraphicsDrawable3}"
+                            Drawable4Source="{Binding GraphicsDrawable4}"
+                            Drawable5Source="{Binding GraphicsDrawable5}"
+                            Drawable6Source="{Binding GraphicsDrawable6}"
+                            Drawable7Source="{Binding GraphicsDrawable7}"
+                            Drawable8Source="{Binding GraphicsDrawable8}"
+                            Drawable9Source="{Binding GraphicsDrawable9}"
+                            HeightRequest="360"
+                            HorizontalOptions="FillAndExpand"
+                            Pulsante1Text="Pagina 1"
+                            Pulsante2Text="Pagina 2"
+                            Pulsante3Text="Pagina 3"
+                            SelectedBackgroundColor="{StaticResource Primary}"
+                            SelectedTextColor="White"
+                            UnselectedBackgroundColor="{StaticResource Tertiary}"
+                            UnselectedTextColor="White"
+                            VerticalOptions="FillAndExpand" />
+                    </StackLayout>
+                    <StackLayout
+                        Padding="5"
+                        HorizontalOptions="FillAndExpand"
+                        Spacing="10"
+                        VerticalOptions="FillAndExpand">
+                        <StackLayout
+                            Margin="0,10"
+                            Spacing="7"
+                            VerticalOptions="EndAndExpand">
+                            <!--<Button
+    Command="{Binding SalvaDocumentoCommand}"
+    Scale="0.7"
+    Text="Salva" />
+                            <Button
+    Command="{Binding SalvaStampaEtichettaCommand}"
+    Scale="0.7"
+    Text="Salva e stampa etichetta" />-->
+
+                            <!--CommandParameter="{x:Reference myGraphicView}"-->
+                           
+                            <Button
+                                
+                                
+                                 Command="{Binding StampaEtichettaCommand}"
+                                Scale="0.7"
+                                Text="Stampa etichetta" />
+                        </StackLayout>
+                        <StackLayout
+                            Spacing="10"
+                            VerticalOptions="End">
+                            <StackLayout
+                                Orientation="Horizontal"
+                                Spacing="10">
+                                <Button
+                                    Command="{Binding ApriViewDocumentoCommand}"
+                                    HorizontalOptions="FillAndExpand"
+                                    Scale="0.7"
+                                    Text="Docum." />
+                                <Button
+                                    Command="{Binding ApriAntemprimaCommand}"
+                                    HorizontalOptions="FillAndExpand"
+                                    Scale="0.7"
+                                    Text="Anteprima" />
+                            </StackLayout>
+                            <Button
+                                Command="{Binding ApriDocumentiApertiCommand}"
+                                
+                                Text="Documenti Aperti" />
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout
+                Grid.Column="1"
+                Padding="5"
+                Spacing="10">
+                <StackLayout
+                    HorizontalOptions="FillAndExpand"
+                    Orientation="Horizontal"
+                    Spacing="10"
+                    VerticalOptions="FillAndExpand">
+                    <Border
+                        Padding="10"
+                        HorizontalOptions="FillAndExpand">
+                        <StackLayout
+                            HorizontalOptions="FillAndExpand"
+                            Spacing="10"
+                            VerticalOptions="Center">
+                            <StackLayout
+                                Orientation="Horizontal"
+                                Spacing="10">
+                                <Entry
+                                    HeightRequest="40"
+                                    HorizontalOptions="FillAndExpand"
+                                    Scale="0.7"
+                                    Text="{Binding DettaglioDocumento.PrezzoIvato}"
+                                    VerticalOptions="Center">
+                                    <Entry.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding Source={x:Reference IvatoCheckBox}, Path=IsChecked}"
+                                            TargetType="Entry"
+                                            
+                                            Value="True">
+                                            
+                                            <Setter Property="BackgroundColor" Value="LightSalmon" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                                            Binding="{Binding Source={x:Reference IvatoCheckBox}, Path=IsChecked}"
+                                            TargetType="Entry"
+                                            Value="False">
+                                            <Setter Property="BackgroundColor" Value="White" />
+                                        </DataTrigger>
+                                    </Entry.Triggers>
+                                </Entry>
+                                <RadioButton
+                                    x:Name="IvatoCheckBox"
+                                    Content="Ivato"
+                                    GroupName="Costo"
+                                    IsChecked="{Binding Ivato}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="90" />
+                            </StackLayout>
+                            <StackLayout
+                                Orientation="Horizontal"
+                                Spacing="10">
+                                <Entry
+                                    HeightRequest="40"
+                                    HorizontalOptions="FillAndExpand"
+                                    Text="{Binding DettaglioDocumento.Prezzo}"
+                                    VerticalOptions="Center">
+                                    <Entry.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding Source={x:Reference ImponibileCheckBox}, Path=IsChecked}"
+                                            TargetType="Entry"
+                                            Value="True">
+                                            <Setter Property="BackgroundColor" Value="LightSalmon" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                                            Binding="{Binding Source={x:Reference ImponibileCheckBox}, Path=IsChecked}"
+                                            TargetType="Entry"
+                                            Value="False">
+                                            <Setter Property="BackgroundColor" Value="White" />
+                                        </DataTrigger>
+                                    </Entry.Triggers>
+                                </Entry>
+                                <RadioButton
+                                    x:Name="ImponibileCheckBox"
+                                    Content="Impon."
+                                    GroupName="Costo"
+                                    IsChecked="{Binding Ivato, Converter={toolkit:InvertedBoolConverter}}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="90" />
+                            </StackLayout>
+                            <StackLayout
+                                Orientation="Horizontal"
+                                Spacing="10">
+                                <controls:CustomSfComboBox
+                                    HeightRequest="40"
+                                    IsClearButtonVisible="False"
+                                    IsEditable="False"
+                                    IsFilteringEnabled="False"
+                                    SelectedItem="{Binding DettaglioDocumento.Articolo.Iva, Mode=TwoWay}"
+                                    WidthRequest="70">
+                                    <controls:CustomSfComboBox.ItemsSource>
+                                        <x:Array Type="{x:Type x:String}">
+                                            <x:String>22</x:String>
+                                            <x:String>10</x:String>
+                                            <x:String>04</x:String>
+                                        </x:Array>
+                                    </controls:CustomSfComboBox.ItemsSource>
+                                </controls:CustomSfComboBox>
+                                <Label
+                                    Text="IVA"
+                                    VerticalOptions="Center" />
+                                <controls:CustomSfComboBox
+                                    HeightRequest="40"
+                                    IsClearButtonVisible="False"
+                                    IsEditable="False"
+                                    IsFilteringEnabled="False"
+                                    ItemsSource="{Binding Listini}"
+                                    SelectedItem="{Binding Documento.Cliente.Listino, Mode=TwoWay}"
+                                    SelectionChangedCommand="{Binding ClienteSelezionatoCommand}"
+                                    WidthRequest="70" />
+                                <Label
+                                    Text="Listino"
+                                    VerticalOptions="Center" />
+                            </StackLayout>
+                            <StackLayout
+                                Orientation="Horizontal"
+                                Spacing="10">
+                                <StackLayout HorizontalOptions="FillAndExpand">
+                                    <Label
+                                        Text="Sconto %"
+                                        VerticalOptions="Center" />
+                                    <controls:CustomEntry
+                                        HorizontalOptions="FillAndExpand"
+                                        Text="{Binding Documento.Cliente.Sconto}"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+                                <StackLayout HorizontalOptions="FillAndExpand">
+                                    <Label
+                                        Text="Spese trasp."
+                                        VerticalOptions="Center" />
+                                    <controls:CustomEntry
+                                        HorizontalOptions="FillAndExpand"
+                                        Text="{Binding Documento.Cliente.Speset, Converter={converters:AggiungiIVA22Converter}}"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </Border>
+                    <Border
+                        Padding="10"
+                        HorizontalOptions="FillAndExpand">
+                        <StackLayout
+                            HorizontalOptions="FillAndExpand"
+                            Spacing="10">
+                            <Label Text="Costo Meccanica" />
+                            <controls:CustomEntry
+                                HorizontalOptions="FillAndExpand"
+                                Text="{Binding DettaglioDocumento.CostoMeccanica}"
+                                VerticalOptions="Center" />
+                            <Label Text="Costo Tessuto" />
+                            <controls:CustomEntry
+                                HorizontalOptions="FillAndExpand"
+                                Text="{Binding DettaglioDocumento.CostoTessuto}"
+                                VerticalOptions="Center" />
+                            <Label Text="Q.ta x Collo" />
+                            <controls:CustomEntry
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Center" />
+                            <Label Text="Pr. acq" />
+                            <controls:CustomEntry
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Center" />
+                        </StackLayout>
+                    </Border>
+                    <StackLayout
+                        HorizontalOptions="FillAndExpand"
+                        Spacing="10">
+                        <Border
+                            Padding="10"
+                            BackgroundColor="Yellow"
+                            VerticalOptions="FillAndExpand">
+                            <StackLayout Spacing="10">
+                                <StackLayout
+                                    RadioButtonGroup.GroupName="Dcoumento"
+                                    RadioButtonGroup.SelectedValue="{Binding TipoDocumentoSelezione}">
+                                    <RadioButton
+                                        Content="ORDINE"
+                                        IsChecked="True"
+                                        VerticalOptions="Center"
+                                        Value="Ordine" />
+                                    <RadioButton
+                                        Content="PREVENTIVO"
+                                        VerticalOptions="Center"
+                                        Value="Preventivo" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <CheckBox />
+                                    <Label
+                                        Text="Doc. Sospeso"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+                                <Button Text="Crea Doc Vuoto" />
+                            </StackLayout>
+                        </Border>
+                        <Border>
+                            <StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <CheckBox IsChecked="{Binding CercaInElencoDoc}">
+                                        <CheckBox.Behaviors>
+                                            <toolkit:EventToCommandBehavior
+                                                Command="{Binding CaricaClientiCommand}"
+                                                EventName="CheckedChanged" />
+                                        </CheckBox.Behaviors>
+                                    </CheckBox>
+                                    <Label
+                                        Text="Cerca in elenco Doc"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+                            </StackLayout>
+                        </Border>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout
+                    Orientation="Horizontal"
+                    Spacing="10"
+                    VerticalOptions="FillAndExpand">
+                    <Border
+                        Padding="10"
+                        HorizontalOptions="FillAndExpand">
+                        <StackLayout
+                            Orientation="Horizontal"
+                            Spacing="20">
+                            <StackLayout
+                                HorizontalOptions="FillAndExpand"
+                                Spacing="10"
+                                VerticalOptions="Center">
+                                <Label Text="Supplemento1" />
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+                                    <Entry
+                                        HorizontalOptions="FillAndExpand"
+                                        Text="{Binding DettaglioDocumento.Supplemento1Pezzi}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Text="Pz. Suppl"
+                                        VerticalOptions="Center"
+                                        WidthRequest="80" />
+                                </StackLayout>
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+                                    <Entry
+                                        HorizontalOptions="FillAndExpand"
+                                        Text="{Binding DettaglioDocumento.Supplemento1Quantita}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Text="Qnt. Suppl"
+                                        VerticalOptions="Center"
+                                        WidthRequest="80" />
+                                </StackLayout>
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+                                    <Entry
+                                        HorizontalOptions="FillAndExpand"
+                                        Text="{Binding DettaglioDocumento.Supplemento1Prezzo}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Text="Costo + iva"
+                                        VerticalOptions="Center"
+                                        WidthRequest="80" />
+                                </StackLayout>
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+                                    <Entry
+                                        HorizontalOptions="FillAndExpand"
+                                        Text="{Binding DettaglioDocumento.Supplemento1PrezzoTotale}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Text="Tot + iva"
+                                        VerticalOptions="Center"
+                                        WidthRequest="80" />
+                                </StackLayout>
+                            </StackLayout>
+                            <StackLayout
+                                HorizontalOptions="FillAndExpand"
+                                Spacing="10"
+                                VerticalOptions="Center">
+                                <Label Text="Supplemento2" />
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+                                    <Entry
+                                        HorizontalOptions="FillAndExpand"
+                                        Text="{Binding DettaglioDocumento.Supplemento2Pezzi}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Text="Pz. Suppl"
+                                        VerticalOptions="Center"
+                                        WidthRequest="80" />
+                                </StackLayout>
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+                                    <Entry
+                                        HorizontalOptions="FillAndExpand"
+                                        Text="{Binding DettaglioDocumento.Supplemento2Quantita}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Text="Qnt. Suppl"
+                                        VerticalOptions="Center"
+                                        WidthRequest="80" />
+                                </StackLayout>
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+                                    <Entry
+                                        HorizontalOptions="FillAndExpand"
+                                        Text="{Binding DettaglioDocumento.Supplemento2Prezzo}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Text="Costo + iva"
+                                        VerticalOptions="Center"
+                                        WidthRequest="80" />
+                                </StackLayout>
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+                                    <Entry
+                                        HorizontalOptions="FillAndExpand"
+                                        Text="{Binding DettaglioDocumento.Supplemento2PrezzoTotale}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Text="Tot + iva"
+                                        VerticalOptions="Center"
+                                        WidthRequest="80" />
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </Border>
+                    <Border Padding="10">
+                        <StackLayout Spacing="10">
+                            <StackLayout
+                                Orientation="Horizontal"
+                                Spacing="10">
+                                <Label
+                                    Text="Qnt"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Text="{Binding DettaglioDocumento.Articolo.Misura}"
+                                    VerticalOptions="Center" />
+                                <Entry
+                                    Text="{Binding DettaglioDocumento.Quantita}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="150" />
+                            </StackLayout>
+                            <StackLayout Spacing="10">
+                                <Label
+                                    Text="Tot inserimento"
+                                    VerticalOptions="Center" />
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+                                    <Entry
+                                        Text="{Binding TotaleInserimento}"
+                                        VerticalOptions="Center"
+                                        WidthRequest="150" />
+                                    <Button Text="+" />
+                                </StackLayout>
+                                <Entry
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="Center"
+                                    WidthRequest="150" />
+                            </StackLayout>
+                        </StackLayout>
+                    </Border>
+                </StackLayout>
+                <Border Padding="10">
+                    <StackLayout Spacing="10">
+                        <Label
+                            Text="Supplemento1"
+                            VerticalOptions="Center" />
+                        <controls:CustomSfComboBox
+                            Scale="0.7"
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding ControlliInterfaccia.ListaSupplemento1}"
+                            SelectedItem="{Binding DettaglioDocumento.Supplemento1}"
+                            SelectionChangedCommand="{Binding Supplemento1SelezionatoCommand}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Text="Colore Supplemento1"
+                            VerticalOptions="Center" />
+                        <controls:CustomSfComboBox
+                            Scale="0.8"
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding ControlliInterfaccia.ListaSupplemento1Colore}"
+                            SelectedItem="{Binding DettaglioDocumento.Supplemento1Colore}"
+                            SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Text="Supplemento3"
+                            VerticalOptions="Center" />
+                        <controls:CustomSfComboBox
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding ControlliInterfaccia.ListaSupplemento2}"
+                            SelectedItem="{Binding DettaglioDocumento.Supplemento2}"
+                            SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                </Border>
+            </StackLayout>
+            <StackLayout
+                Grid.Column="2"
+                Padding="5"
+                Spacing="10">
+                <StackLayout
+                    Orientation="Horizontal"
+                    Spacing="10">
+                    <StackLayout
+                        HorizontalOptions="FillAndExpand"
+                        Spacing="10">
+                        <Border
+                            Padding="10"
+                            HorizontalOptions="FillAndExpand">
+                            <StackLayout
+                                Padding="10"
+                                Spacing="10">
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+                                    <Label
+                                        Text="Agente"
+                                        VerticalOptions="Center"
+                                        WidthRequest="80" />
+                                    <controls:CustomSfComboBox
+                                        DisplayMemberPath="NomeAgente"
+                                        HeightRequest="40"
+                                        HorizontalOptions="FillAndExpand"
+                                        IsClearButtonVisible="False"
+                                        IsEditable="False"
+                                        ItemsSource="{Binding Agenti}"
+                                        SelectedItem="{Binding Agente}" />
+                                </StackLayout>
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+                                    <Label
+                                        Text="Provv. %"
+                                        VerticalOptions="Center"
+                                        WidthRequest="80" />
+                                    <Entry
+                                        HeightRequest="40"
+                                        HorizontalOptions="FillAndExpand"
+                                        Text="{Binding Agente.PercentualeProvvigione}" />
+                                </StackLayout>
+                            </StackLayout>
+                        </Border>
+                        <Border
+                            Padding="10"
+                            HorizontalOptions="FillAndExpand">
+                            <StackLayout
+                                Padding="10"
+                                Spacing="10">
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+                                    <Label
+                                        Text="Categoria"
+                                        VerticalOptions="Center"
+                                        WidthRequest="80" />
+                                    <controls:CustomSfComboBox
+                                        HeightRequest="40"
+                                        HorizontalOptions="FillAndExpand"
+                                        IsClearButtonVisible="False"
+                                        IsEditable="False"
+                                        ItemsSource="{Binding Categorie}"
+                                        SelectedItem="{Binding DettaglioDocumento.Articolo.Categoria}" />
+
+                                </StackLayout>
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+                                    <Label
+                                        Text="Sottocateg."
+                                        VerticalOptions="Center"
+                                        WidthRequest="80" />
+                                    <controls:CustomSfComboBox
+                                        HeightRequest="40"
+                                        HorizontalOptions="FillAndExpand"
+                                        IsClearButtonVisible="False"
+                                        IsEditable="False"
+                                        ItemsSource="{Binding SottoCategorie}"
+                                        SelectedItem="{Binding DettaglioDocumento.Articolo.SubCateg}" />
+                                </StackLayout>
+                                <Button Text="Rispristina Filtro" />
+                            </StackLayout>
+                        </Border>
+                    </StackLayout>
+                    <Border Padding="10">
+                        <StackLayout
+                            Padding="10"
+                            Spacing="10">
+                            <controls:AkjbaButton
+                                CheckedBackgroundColor="{StaticResource Tertiary}"
+                                Command="{Binding Diviso2Command}"
+                                CornerRadius="8"
+                                HeightRequest="44"
+                                Text="/2"
+                                TextColor="White"
+                                UncheckedBackgroundColor="{StaticResource Primary}" />
+                            <controls:AkjbaButton
+                                CheckedBackgroundColor="{StaticResource Tertiary}"
+                                Command="{Binding Diviso2CUCommand}"
+                                CornerRadius="8"
+                                HeightRequest="44"
+                                Text="/2CU"
+                                TextColor="White"
+                                UncheckedBackgroundColor="{StaticResource Primary}" />
+                            <Button Text="Panne" />
+                            <Button Text="DS" />
+                        </StackLayout>
+                    </Border>
+                </StackLayout>
+                <StackLayout
+                    Spacing="10"
+                    VerticalOptions="FillAndExpand">
+                    <Label Text="Note Cliente" />
+                    <Editor
+                        AutoSize="Disabled"
+                        IsReadOnly="True"
+                        MinimumHeightRequest="100"
+                        Text="{Binding Documento.Cliente.Note}"
+                        VerticalOptions="FillAndExpand" />
+                    <Label Text="Note Articolo" />
+                    <Editor
+                        AutoSize="Disabled"
+                        IsReadOnly="True"
+                        MinimumHeightRequest="100"
+                        Text="{Binding DettaglioDocumento.Articolo.NoteDb}"
+                        VerticalOptions="FillAndExpand" />
+                    <Label Text="Email a fornitori" />
+                    <StackLayout
+                        Orientation="Horizontal"
+                        Spacing="10">
+                        <Entry HorizontalOptions="FillAndExpand" />
+                        <Button Text="Invio" />
+                    </StackLayout>
+                    <Editor
+                        AutoSize="Disabled"
+                        MinimumHeightRequest="100"
+                        VerticalOptions="FillAndExpand" />
+                    <StackLayout
+                        Orientation="Horizontal"
+                        Spacing="10">
+                        <Button
+                            HorizontalOptions="FillAndExpand"
+                            Text="Elenco" />
+                        <Button
+                            HorizontalOptions="FillAndExpand"
+                            Text="Clear" />
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </Grid>
+    </Grid>
+</controls:BasePage>

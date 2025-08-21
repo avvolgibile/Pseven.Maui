@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Pseven.Views.DocumentoPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:Pseven.Controls"
+    xmlns:converters="clr-namespace:Pseven.Converters"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    
+    Title="Documento"
+    >
+    <VerticalStackLayout>
+        <Label
+            HorizontalOptions="Center"
+            Text="DOCUMENTO"
+            VerticalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>

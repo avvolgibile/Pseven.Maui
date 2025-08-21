@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="Pseven.Controls.CustomTabbedPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style
+                Class="BordiInterni"
+                TargetType="Border">
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="Margin" Value="5, 0, 5, 5" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 0" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+            </Style>
+            <Style
+                Class="Immagini"
+                TargetType="GraphicsView">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <Border
+        x:Name="BorderBase"
+        Margin="0"
+        Padding="0"
+        StrokeShape="RoundRectangle 8, 8, 0, 0">
+        <StackLayout
+            x:Name="StackBase"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand">
+            <StackLayout
+                x:Name="GridPulsanti"
+                HorizontalOptions="FillAndExpand"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="Pulsante1"
+                    CornerRadius="0"
+                    HorizontalOptions="FillAndExpand" />
+                <Button
+                    x:Name="Pulsante2"
+                    CornerRadius="0"
+                    HorizontalOptions="FillAndExpand" />
+                <Button
+                    x:Name="Pulsante3"
+                    CornerRadius="0"
+                    HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <StackLayout
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+                <StackLayout
+                    x:Name="GridTab1"
+                    Margin="0,5,0,0"
+                    VerticalOptions="FillAndExpand">
+                    <Border StyleClass="BordiInterni">
+                        <GraphicsView
+                            x:Name="Immagine1"
+                            StyleClass="Immagini" />
+                    </Border>
+                    <Border StyleClass="BordiInterni">
+                        <GraphicsView
+                            x:Name="Immagine2"
+                            Drawable="{Binding CustomDrawable}"
+                            StyleClass="Immagini" />
+                    </Border>
+                    <Border StyleClass="BordiInterni">
+                        <GraphicsView
+                            x:Name="Immagine3"
+                            StyleClass="Immagini" />
+                    </Border>
+                </StackLayout>
+                <StackLayout
+                    x:Name="GridTab2"
+                    VerticalOptions="FillAndExpand">
+                    <Border StyleClass="BordiInterni">
+                        <GraphicsView
+                            x:Name="Immagine4"
+                            StyleClass="Immagini" />
+                    </Border>
+                    <Border StyleClass="BordiInterni">
+                        <GraphicsView
+                            x:Name="Immagine5"
+                            StyleClass="Immagini" />
+                    </Border>
+                    <Border StyleClass="BordiInterni">
+                        <GraphicsView
+                            x:Name="Immagine6"
+                            StyleClass="Immagini" />
+                    </Border>
+                </StackLayout>
+                <StackLayout
+                    x:Name="GridTab3"
+                    VerticalOptions="FillAndExpand">
+                    <Border StyleClass="BordiInterni">
+                        <GraphicsView
+                            x:Name="Immagine7"
+                            StyleClass="Immagini" />
+                    </Border>
+                    <Border StyleClass="BordiInterni">
+                        <GraphicsView
+                            x:Name="Immagine8"
+                            StyleClass="Immagini" />
+                    </Border>
+                    <Border StyleClass="BordiInterni">
+                        <GraphicsView
+                            x:Name="Immagine9"
+                            StyleClass="Immagini" />
+                    </Border>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </Border>
+</ContentView>

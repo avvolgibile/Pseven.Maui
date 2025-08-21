@@ -1,0 +1,15 @@
+# Cartelle da ignorare
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.db
+*.log
+*.tmp
+*.exe
+*.dll
+*.pdb
+*.cache
+*.zip
+*.7z

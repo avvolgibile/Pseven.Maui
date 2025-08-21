@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pseven.Maui", "Pseven.Maui.csproj", "{0FD96B83-CF4F-143F-492C-E828B7CCE1F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsunAPI", "..\PsunAPI\PsunAPI.csproj", "{6A7149BD-40B8-4F9C-8817-B6983525388B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0FD96B83-CF4F-143F-492C-E828B7CCE1F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FD96B83-CF4F-143F-492C-E828B7CCE1F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FD96B83-CF4F-143F-492C-E828B7CCE1F5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0FD96B83-CF4F-143F-492C-E828B7CCE1F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FD96B83-CF4F-143F-492C-E828B7CCE1F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A7149BD-40B8-4F9C-8817-B6983525388B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A7149BD-40B8-4F9C-8817-B6983525388B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A7149BD-40B8-4F9C-8817-B6983525388B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A7149BD-40B8-4F9C-8817-B6983525388B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {73215DA5-B2BA-4A0A-88EA-DC212B190BF2}
+	EndGlobalSection
+EndGlobal

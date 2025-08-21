@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Pseven.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Pseven"
+    xmlns:views="clr-namespace:Pseven.Views"
+    Title="Pseven"
+    Shell.FlyoutBehavior="Disabled">
+
+   
+    
+    <ShellContent
+        Title="Ordine"
+        ContentTemplate="{DataTemplate views:OrdinePage}"
+        Route="OrdineView" />
+
+    <ShellContent Title="Documenti Aperti"
+           ContentTemplate="{DataTemplate views:DocumentiApertiPage}"
+           Route="DocumentiApertiPage" />
+   
+    <ShellContent Title="Storico Articoli"
+       ContentTemplate="{DataTemplate views:StoricoArticoliPage}"
+       Route="StoricoArticoliPage" />
+
+</Shell>
+
