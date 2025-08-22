@@ -8,7 +8,7 @@
     <VerticalStackLayout>
         <syncfusion:SfDataGrid x:Name="dataGrid"  
              AutoGenerateColumnsMode="SmartReset"  
-             ItemsSource="{Binding Articoli}" />
+             ItemsSource="{Binding Dettagli}" />
         <Button Text="Genera PDF"
         Command="{Binding TestPdfManualeCommand}"
         BackgroundColor="DarkRed"

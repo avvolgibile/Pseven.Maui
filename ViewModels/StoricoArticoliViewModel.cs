@@ -16,30 +16,31 @@ public partial class StoricoArticoliViewModel : ObservableObject
 
     public StoricoArticoliViewModel()
     {
-        articoli = new ObservableCollection<StoricoArticolo>();
-        _ = CaricaDatiAsync();
+
+        //articoli = new ObservableCollection<StoricoArticolo>();
+        //_ = CaricaDatiAsync();
     }
 
-    private async Task CaricaDatiAsync()
-    {
-        try
-        {
-            using var client = new HttpClient();
-            var risultato = await client.GetFromJsonAsync<List<StoricoArticolo>>("https://localhost:7107/api/DettaglioDocumento");
+    //private async Task CaricaDatiAsync()
+    //{
+    //    try
+    //    {
+    //        using var client = new HttpClient();
+    //        var risultato = await client.GetFromJsonAsync<List<StoricoArticolo>>("https://localhost:7107/api/DettaglioDocumento");
 
 
-           // Console.WriteLine(risultato==null? "risultato null":"trovati risultati");
+    //       // Console.WriteLine(risultato==null? "risultato null":"trovati risultati");
             
             
             
-            if (risultato != null)
-                Articoli = new ObservableCollection<StoricoArticolo>(risultato);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Errore nel caricamento: " + ex.Message);
-        }
-    }
+    //        if (risultato != null)
+    //            Articoli = new ObservableCollection<StoricoArticolo>(risultato);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Console.WriteLine("Errore nel caricamento: " + ex.Message);
+    //    }
+    //}
    
 
     [RelayCommand]
