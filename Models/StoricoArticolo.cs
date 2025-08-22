@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SQLite;
 
 namespace Pseven.Models
 {
-    [Table("DettaglioDucumento")]
     public class StoricoArticolo
     {
        // public int Id { get; set; }

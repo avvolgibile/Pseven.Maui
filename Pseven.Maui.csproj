@@ -69,15 +69,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <AndroidResource Remove="Views\Articoli\**" />
-	  <Compile Remove="Views\Articoli\**" />
-	  <EmbeddedResource Remove="Views\Articoli\**" />
-	  <MauiCss Remove="Views\Articoli\**" />
-	  <MauiXaml Remove="Views\Articoli\**" />
-	  <None Remove="Views\Articoli\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <None Remove="Resources\Images\download.png" />
 	  <None Remove="Resources\Images\lock.png" />
 	  <None Remove="Resources\Images\mini.png" />
@@ -145,6 +136,10 @@
 	  <MauiXaml Update="Views\StoricoArticoliPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Views\Articoli\" />
 	</ItemGroup>
 
 	<ItemGroup>

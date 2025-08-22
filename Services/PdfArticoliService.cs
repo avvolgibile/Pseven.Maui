@@ -23,7 +23,7 @@ public static byte[] GeneraPdfA4DallaLista(List<StoricoArticolo> articoli)
                 page.Content().Table(table =>
                 {
                     // Recupera tutte le proprietà pubbliche della classe StoricoArticolo
-                    var properties = typeof(StoricoArticolo).GetProperties();/////
+                    var properties = typeof(StoricoArticolo).GetProperties();
 
                     // Definizione delle colonne
                     table.ColumnsDefinition(columns =>

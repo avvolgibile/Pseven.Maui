@@ -20,11 +20,11 @@ namespace Pseven.ViewModels
         //[RelayCommand]
         //private async Task ApriDocumentiAperti()
         //{
-        //    await Shell.Current.GoToAsync(nameof(DocumentiApertiPage));///////
+        //    await Shell.Current.GoToAsync(nameof(DocumentiApertiPage));
         //}
 
         [ObservableProperty]
-        private ObservableCollection<DettaglioDocumento> documenti;//////////
+        private ObservableCollection<DettaglioDocumento> documenti;
 
         public DocumentiApertiViewModel()
         {

@@ -66,10 +66,8 @@ namespace Pseven
             builder.Services.AddSingleton<OrdinePage>();
             builder.Services.AddSingleton<DocumentoViewModel>();
             builder.Services.AddSingleton<DocumentoPage>();
-           
             builder.Services.AddSingleton<ArticoliViewModel>();
             builder.Services.AddSingleton<ArticoliPage>();
-          
             builder.Services.AddSingleton<MiniFormViewModel>();
             builder.Services.AddSingleton<MiniFormPage>();
            // builder.Services.AddSingleton<DocumentiApertiPage>();
