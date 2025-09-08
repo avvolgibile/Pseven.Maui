@@ -525,8 +525,14 @@ namespace Pseven.Models
         public bool IsSospeso { get; set; }
         public string? NoteDocumento { get; set; }
     }
+
+
+
+
+
     public class DettaglioDocumento
     {
+
         [PrimaryKey, AutoIncrement]
         public int DettaglioDocumentoId { get; set; }
         [ForeignKey(typeof(Documento))]

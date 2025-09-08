@@ -1,20 +1,248 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
-              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"  
-             x:Class="Pseven.Views.StoricoArticoliPage"
-             Title="Storico Articoli">
-    <VerticalStackLayout>
-        <syncfusion:SfDataGrid x:Name="dataGrid"  
-             AutoGenerateColumnsMode="SmartReset"  
-             ItemsSource="{Binding Dettagli}" />
-        <Button Text="Genera PDF"
-        Command="{Binding TestPdfManualeCommand}"
-        BackgroundColor="DarkRed"
-        TextColor="White"
-        CornerRadius="8"
-        Padding="10" />
-    </VerticalStackLayout>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sfgrid="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
+    xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
+    x:Class="Pseven.Views.StoricoArticoliPage"
+    Title="Storico Articoli">
 
+    <!-- ================== RISORSE STILI ================== -->
+    <ContentPage.Resources>
+        <Style TargetType="Frame" x:Key="Panel">
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="HasShadow" Value="False"/>
+            <Setter Property="BorderColor" Value="#DDDDDD"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Margin" Value="4,0"/>
+        </Style>
+
+        <Style TargetType="Label" x:Key="Cap">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+
+        <Style TargetType="Entry" x:Key="Tiny">
+            <Setter Property="HeightRequest" Value="32"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid Padding="8" RowDefinitions="Auto,*,Auto">
+
+        <!-- ================== BARRA FILTRI ================== -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="3*,3*,2*,2*,3*,2*,2*,2*,2*,2*,Auto,Auto"
+              ColumnSpacing="6">
+
+            <!-- Articoli -->
+            <Frame Grid.Column="0" Style="{StaticResource Panel}">
+                <VerticalStackLayout>
+                    <Label Text="Articoli" Style="{StaticResource Cap}"/>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                        <Entry Placeholder="Cerca (* supportato)"
+                               Text="{Binding ArticoloFiltro}"
+                               Style="{StaticResource Tiny}"/>
+                        <Picker Title="Elenco"
+                                ItemsSource="{Binding ArticoliSorgente}"
+                                ItemDisplayBinding="{Binding Descrizione}"
+                                SelectedItem="{Binding ArticoloSelezionato}"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Cliente -->
+            <Frame Grid.Column="1" Style="{StaticResource Panel}">
+                <VerticalStackLayout>
+                    <Label Text="Cliente" Style="{StaticResource Cap}"/>
+                    <Picker Title="Seleziona cliente"
+                            ItemsSource="{Binding Clienti}"
+                            ItemDisplayBinding="{Binding RagioneSociale}"
+                            SelectedItem="{Binding ClienteSelezionato}"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- L con Intervallo -->
+            <Frame Grid.Column="2" Style="{StaticResource Panel}">
+                <VerticalStackLayout>
+                    <Label Text="L" Style="{StaticResource Cap}"/>
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="6">
+                        <Entry Placeholder="Da" Keyboard="Numeric" Text="{Binding LMin}"/>
+                        <Entry Placeholder="A"  Keyboard="Numeric" Text="{Binding LMax}"/>
+                    </Grid>
+                    <HorizontalStackLayout Spacing="6" Margin="0,6,0,0">
+                        <CheckBox IsChecked="{Binding UsaIntervalloL}"/>
+                        <Label Text="Intervallo" VerticalTextAlignment="Center"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- H con Intervallo -->
+            <Frame Grid.Column="3" Style="{StaticResource Panel}">
+                <VerticalStackLayout>
+                    <Label Text="H" Style="{StaticResource Cap}"/>
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="6">
+                        <Entry Placeholder="Da" Keyboard="Numeric" Text="{Binding HMin}"/>
+                        <Entry Placeholder="A"  Keyboard="Numeric" Text="{Binding HMax}"/>
+                    </Grid>
+                    <HorizontalStackLayout Spacing="6" Margin="0,6,0,0">
+                        <CheckBox IsChecked="{Binding UsaIntervalloH}"/>
+                        <Label Text="Intervallo" VerticalTextAlignment="Center"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Periodo (date + radio) -->
+            <Frame Grid.Column="4" Grid.ColumnSpan="1" Style="{StaticResource Panel}">
+                <VerticalStackLayout>
+                    <Label Text="Periodo" Style="{StaticResource Cap}"/>
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="6" Margin="0,0,0,6">
+                        <DatePicker Date="{Binding DataInizio}"/>
+                        <DatePicker Date="{Binding DataFine}"/>
+                    </Grid>
+                    <HorizontalStackLayout Spacing="12">
+                        <RadioButton GroupName="Periodo" Content="mese scorso" IsChecked="{Binding IsMeseScorso}"/>
+                        <RadioButton GroupName="Periodo" Content="mese corr"   IsChecked="{Binding IsMeseCorrente}"/>
+                        <RadioButton GroupName="Periodo" Content="anno corr"   IsChecked="{Binding IsAnnoCorrente}"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- COL / Rf -->
+            <Frame Grid.Column="5" Style="{StaticResource Panel}">
+                <VerticalStackLayout>
+                    <Label Text="COL" Style="{StaticResource Cap}"/>
+                    <Entry Text="{Binding FiltroCol}" Style="{StaticResource Tiny}"/>
+                    <Label Text="Rf"  Style="{StaticResource Cap}" Margin="0,6,0,0"/>
+                    <Entry Text="{Binding FiltroRiferimento}" Style="{StaticResource Tiny}"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Com. / Agente -->
+            <Frame Grid.Column="6" Style="{StaticResource Panel}">
+                <VerticalStackLayout>
+                    <Label Text="Com." Style="{StaticResource Cap}"/>
+                    <Entry Text="{Binding FiltroCommessa}" Style="{StaticResource Tiny}"/>
+                    <Label Text="Agente" Style="{StaticResource Cap}" Margin="0,6,0,0"/>
+                    <Entry Text="{Binding FiltroAgente}" Style="{StaticResource Tiny}"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Varie1 + nota asterisco -->
+            <Frame Grid.Column="7" Style="{StaticResource Panel}">
+                <VerticalStackLayout>
+                    <Label Text="Varie1" Style="{StaticResource Cap}"/>
+                    <Entry Text="{Binding FiltroVarie1}" Style="{StaticResource Tiny}"/>
+                    <Label FontSize="10" Text="Usare “*” per testo incompleto"
+                           TextColor="#555" Margin="0,6,0,0"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Tipo documento -->
+            <Frame Grid.Column="8" Style="{StaticResource Panel}">
+                <VerticalStackLayout>
+                    <Label Text="Tipo" Style="{StaticResource Cap}"/>
+                    <RadioButton GroupName="TipoDoc" Content="ORDINE"     IsChecked="{Binding IsOrdine}"/>
+                    <RadioButton GroupName="TipoDoc" Content="PREVENTIVO" IsChecked="{Binding IsPreventivo}"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Pulsanti filtro -->
+            <Frame Grid.Column="9" Style="{StaticResource Panel}">
+                <VerticalStackLayout>
+                    <Button Text="Applica" Command="{Binding ApplicaFiltroCommand}"/>
+                    <Button Text="Ripristina filtro" Margin="0,6,0,0"
+                            Command="{Binding RipristinaFiltroCommand}"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Esci -->
+            <VerticalStackLayout Grid.Column="10" VerticalOptions="Center">
+                <Button Text="Esci" Command="{Binding ChiudiCommand}"/>
+            </VerticalStackLayout>
+
+        </Grid>
+
+        <!-- ================== GRIGLIA DATI ================== -->
+        <sfgrid:SfDataGrid Grid.Row="1"
+                           x:Name="DataGrid"
+                           
+                           ItemsSource="{Binding StoricoArticoli}"
+                           SortingMode="Single"      
+                     
+                           SelectionChanged="DataGrid_SelectionChanged"
+
+                           SelectionMode="Single"
+                           HeaderGridLinesVisibility="Both"
+                           GridLinesVisibility="Both">
+       
+
+        <sfgrid:SfDataGrid.Columns>
+                <sfgrid:DataGridTextColumn HeaderText="Articoli" MappingName="Descrizione" Width="250"/>
+                <sfgrid:DataGridTextColumn HeaderText="UM"       MappingName="UM"         Width="60"/>
+                <sfgrid:DataGridTextColumn HeaderText="Quantità" MappingName="Quantita"   Width="90"/>
+                <sfgrid:DataGridTextColumn HeaderText="L"        MappingName="L"          Width="80"/>
+                <sfgrid:DataGridTextColumn HeaderText="H"        MappingName="H"          Width="80"/>
+                <sfgrid:DataGridTextColumn HeaderText="Pezzi"    MappingName="Pezzi"      Width="70"/>
+                <sfgrid:DataGridTextColumn HeaderText="Prezzo"   MappingName="Prezzo"     Width="100" 
+                                            Format="N2"/>
+                <sfgrid:DataGridTextColumn HeaderText="Sconto"   MappingName="Sconto"     Width="90"  Format="N2"/>
+                <sfgrid:DataGridTextColumn HeaderText="IVA"      MappingName="Iva"        Width="80"  Format="N0"/>
+                <sfgrid:DataGridTextColumn HeaderText="Importo"  MappingName="Importo"    Width="120" Format="N2"/>
+                <sfgrid:DataGridTextColumn HeaderText="Data"     MappingName="Data"       Width="120" Format="dd/MM/yyyy"/>
+                <sfgrid:DataGridTextColumn HeaderText="Comandi"  MappingName="Comandi"    Width="110"/>
+                <sfgrid:DataGridTextColumn HeaderText="Colore"   MappingName="Colore"     Width="110"/>
+                <sfgrid:DataGridTextColumn HeaderText="Varie1"   MappingName="Varie1"     Width="110"/>
+                <sfgrid:DataGridTextColumn HeaderText="Versione" MappingName="Versione"   Width="110"/>
+                <sfgrid:DataGridTextColumn HeaderText="Note"     MappingName="Note"       Width="220"/>
+
+            </sfgrid:SfDataGrid.Columns>
+
+            <FlyoutBase.ContextFlyout>
+                <MenuFlyout >
+                    <MenuFlyoutItem Text="Ristampa Etichetta"
+                            Command="{Binding RistampaEtichettaCommand}"
+                            CommandParameter="{Binding DgwItemselezionatoConTastoDx}" />
+                    <MenuFlyoutSeparator></MenuFlyoutSeparator>
+                    <MenuFlyoutItem Text="Reinserisci"
+             Command="{Binding ReinserisciCommand}"
+             CommandParameter="{Binding DgwItemselezionatoConTastoDx}" />
+
+                </MenuFlyout>
+            </FlyoutBase.ContextFlyout>
+
+        </sfgrid:SfDataGrid>
+
+
+       
+            <!-- ================== BARRA TOTALI ================== -->
+        <Grid Grid.Row="2" ColumnDefinitions="Auto,Auto,Auto,*,Auto" ColumnSpacing="12" Padding="4,8">
+            <Frame Style="{StaticResource Panel}" BackgroundColor="#E7F7E7">
+                <HorizontalStackLayout>
+                    <Label Text="MQ totali:" FontAttributes="Bold" Margin="4,0"/>
+                    <Label Text="{Binding TotaleMq}"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <Frame Grid.Column="1" Style="{StaticResource Panel}">
+                <HorizontalStackLayout>
+                    <Label Text="Pezzi:" FontAttributes="Bold" Margin="4,0"/>
+                    <Label Text="{Binding TotalePezzi}"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <Frame Grid.Column="2" Style="{StaticResource Panel}" BackgroundColor="#FFF7BF">
+                <HorizontalStackLayout>
+                    <Label Text="Importo:" FontAttributes="Bold" Margin="4,0"/>
+                    <Label Text="{Binding TotaleImporto, StringFormat='{}{0:N2}'}"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <Label Grid.Column="4"
+                   HorizontalTextAlignment="End"
+                   VerticalTextAlignment="Center"
+                   Text="{Binding MessaggioStato}"/>
+        </Grid>
+
+    </Grid>
 </ContentPage>

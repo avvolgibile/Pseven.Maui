@@ -1,53 +1,37 @@
-﻿#if WINDOWS
-
-using Microsoft.UI.Xaml;
-using Microsoft.Maui.Controls;
-#endif
+﻿using Pseven.Models;
 using Pseven.ViewModels;
 using Syncfusion.Maui.Core.Carousel;
 using Syncfusion.Maui.DataGrid;
-using Pseven.Models;
 
 namespace Pseven.Views;
 
-public partial class DocumentiApertiPage : ContentPage
+public partial class StoricoDocumentiPage : ContentPage
 {
 
-    private readonly DocumentiApertiViewModels _viewModel;
-
-
-
-    // ///////////////////////////////////////////////////////////////
-
+   
+    private readonly StoricoDocumentiViewModel _viewModel;
     // 🔹 Costruttore vuoto: serve per Shell, DI, o inizializzazione successiva
-    public DocumentiApertiPage()
+    public StoricoDocumentiPage()
     {
         InitializeComponent();
-
-        if (BindingContext is DocumentiApertiViewModels viewmodel)
-        {
-            _viewModel = viewmodel;
-          
-#if WINDOWS
-            this.Loaded += OnLoadedWin;//1)
-                                       //this.Unloaded += OnUnloadedWin;
-#endif
-        }
-
-     
     }
 
     // 🔹 Costruttore con ViewModel: comodo quando apri la finestra direttamente
-    public DocumentiApertiPage(DocumentiApertiViewModels viewmodel) : this()//chiamata al costruttore vuoto dove c'e InitializeComponent
+    public StoricoDocumentiPage(StoricoDocumentiViewModel viewmodel) : this()//chiamata al costruttore vuoto dove c'e InitializeComponent
     {
         _viewModel = viewmodel;
         BindingContext = _viewModel;
 
-
         // L’alert viene visualizzato su QUESTA finestra/pagina
         _viewModel.ShowAlert = (title, msg, ok) => this.DisplayAlert(title, msg, ok);
 
+
+#if WINDOWS
+        this.Loaded += OnLoadedWin;//1)
+                                   //this.Unloaded += OnUnloadedWin;
+#endif
     }
+
 
 
 #if WINDOWS// 1)se metto questo nel costruttore, senza onloated non fa in tempo ad agganviare l' evento
@@ -71,12 +55,7 @@ public partial class DocumentiApertiPage : ContentPage
             .GetKeyStateForCurrentThread(Windows.System.VirtualKey.Shift)
             & Windows.UI.Core.CoreVirtualKeyStates.Down) == Windows.UI.Core.CoreVirtualKeyStates.Down;
 
-        if (ctrl && shift && e.Key == Windows.System.VirtualKey.D)
-        {
-            e.Handled = true;
-            //var window = new Microsoft.Maui.Controls.Window(new StoricoDocumentiPage(new StoricoDocumentiViewModel()));
-            Microsoft.Maui.Controls.Application.Current.OpenWindow(new Microsoft.Maui.Controls.Window(new StoricoDocumentiPage(new StoricoDocumentiViewModel())));
-        }
+       
 
         if (ctrl && shift && e.Key == Windows.System.VirtualKey.A)
         {
@@ -88,16 +67,17 @@ public partial class DocumentiApertiPage : ContentPage
 #endif
 
 
+
     private void DataGrid_SelectionChanged(object sender, DataGridSelectionChangedEventArgs e)
     {
-        if (BindingContext is DocumentiApertiViewModels vm)
+        if (BindingContext is StoricoDocumentiViewModel vm)
         {
             var row = e.AddedRows?.FirstOrDefault();
             if (row != null)
             {
                 vm.DgwItemselezionatoConTastoDx =
-                    row as DocumentoAperto ??
-                    (row as DataGridRowInfo)?.RowData as DocumentoAperto;
+                    row as StoricoDocumento ??
+                    (row as DataGridRowInfo)?.RowData as StoricoDocumento;
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Pseven.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pseven
+namespace Pseven.Services
 {
     public static class DbUtils
     {
@@ -80,7 +81,7 @@ namespace Pseven
     {
         public TAbsDBQueryJson(int connid, TListAbsDBQuery fields)
         {
-            this.connectionid = connid;
+            connectionid = connid;
             this.fields = fields;
         }
 
@@ -101,12 +102,12 @@ namespace Pseven
         public TAbsDBStruct FieldByName(string fieldname)
         {
             int i = 0; int t = -1;
-            while ((i < this.Fields.Count()) && (t == -1))
+            while (i < Fields.Count() && t == -1)
             {
-                if (fieldname.ToLower() == this.Fields[i].fieldname.ToLower()) t = i;
+                if (fieldname.ToLower() == Fields[i].fieldname.ToLower()) t = i;
                 else i++;
             }
-            if (t > -1) return this.Fields[t];
+            if (t > -1) return Fields[t];
             else /*return this.Fields[0]; //*/throw new InvalidFieldNameException("Field name does not exists");
         }
         public TListAbsDBQuery Fields
@@ -134,7 +135,7 @@ namespace Pseven
             bool isNumeric = true;
             foreach (char c in value)
             {
-                if (!Char.IsNumber(c))
+                if (!char.IsNumber(c))
                 {
                     isNumeric = false;
                     break;
@@ -148,13 +149,13 @@ namespace Pseven
             StringBuilder outjsonfilename = new StringBuilder(256);
 
             string logfilename = "";
-            if (this.Log != null) { try { logfilename = Log.FileName; } catch { logfilename = ""; } }
-            else { this.log = new TLogWrapperAbsDB(); }
+            if (Log != null) { try { logfilename = Log.FileName; } catch { logfilename = ""; } }
+            else { log = new TLogWrapperAbsDB(); }
 
             ImportAbsDBDll.CallExecuteSelect(SelectQuery, connectionid, outjsonfilename, _errorcode, logfilename, Log.MaxSizeMB, Log.Level);
 
-            this.lasterrorcode = (TAbsDBErrorCodes)Convert.ToInt32(_errorcode.ToString());
-            ErrorCode = this.lasterrorcode;
+            lasterrorcode = (TAbsDBErrorCodes)Convert.ToInt32(_errorcode.ToString());
+            ErrorCode = lasterrorcode;
             //return outjsonfilename.ToString();
             using var reader = new StreamReader(outjsonfilename.ToString());
             return reader.ReadToEnd();
@@ -166,23 +167,23 @@ namespace Pseven
             int i;
             //ErrorCode = TAbsDBErrorCodes.NoError;
 
-            this.fieldcount = 0;
+            fieldcount = 0;
 
             StringBuilder _errorcode = new StringBuilder(64);
             StringBuilder outjsonfilename = new StringBuilder(256);
 
             string logfilename = "";
-            if (this.Log != null) { try { logfilename = this.Log.FileName; } catch { logfilename = ""; } }
-            else { this.log = new TLogWrapperAbsDB(); }
+            if (Log != null) { try { logfilename = Log.FileName; } catch { logfilename = ""; } }
+            else { log = new TLogWrapperAbsDB(); }
 
-            ImportAbsDBDll.CallExecuteSelect(SelectQuery, connectionid, outjsonfilename, _errorcode, logfilename, this.Log.MaxSizeMB, this.Log.Level);
+            ImportAbsDBDll.CallExecuteSelect(SelectQuery, connectionid, outjsonfilename, _errorcode, logfilename, Log.MaxSizeMB, Log.Level);
 
-            this.lasterrorcode = (TAbsDBErrorCodes)Convert.ToInt32(_errorcode.ToString());
-            ErrorCode = this.lasterrorcode;
+            lasterrorcode = (TAbsDBErrorCodes)Convert.ToInt32(_errorcode.ToString());
+            ErrorCode = lasterrorcode;
 
             jsonfilename = outjsonfilename.ToString();
 
-            if (!File.Exists(jsonfilename)) { ErrorCode = TAbsDBErrorCodes.SwapDataNotExists; this.lasterrorcode = ErrorCode; }
+            if (!File.Exists(jsonfilename)) { ErrorCode = TAbsDBErrorCodes.SwapDataNotExists; lasterrorcode = ErrorCode; }
 
             if (ErrorCode == TAbsDBErrorCodes.NoError)
             {
@@ -206,30 +207,30 @@ namespace Pseven
                             {
                                 case 0:
                                     // Lettura numero di campi
-                                    this.fieldcount = StrToIntDef(reader.Value.ToString());
+                                    fieldcount = StrToIntDef(reader.Value.ToString());
                                     break;
                                 case 1:
                                     // Lettura nome campi e tipo
                                     i = 0;
-                                    while (i < this.FieldCount)
+                                    while (i < FieldCount)
                                     {
 
                                         adata.fieldname = reader.Value.ToString();
                                         exit = !reader.Read();
                                         adata.fieldtype = reader.Value.ToString();
                                         adata.fieldvalue = new TAbsDBListFields();
-                                        this.Fields.Add(adata);
-                                        if (i < this.FieldCount - 1) exit = !reader.Read();
+                                        Fields.Add(adata);
+                                        if (i < FieldCount - 1) exit = !reader.Read();
                                         i++;
                                     }
                                     break;
                                 default:
                                     // Lettura dati
                                     i = 0;
-                                    while (i < this.FieldCount)
+                                    while (i < FieldCount)
                                     {
                                         exit = !reader.Read();
-                                        this.Fields[i].fieldvalue.Add(reader.Value.ToString());
+                                        Fields[i].fieldvalue.Add(reader.Value.ToString());
                                         exit = !reader.Read();
                                         i++;
                                     }
@@ -242,7 +243,7 @@ namespace Pseven
                     catch { }
                 }
 
-                this.recordcount = this.Fields[0].fieldvalue.Count;
+                recordcount = Fields[0].fieldvalue.Count;
                 try { reader.CloseInput = true; reader.Close(); } catch { }
 
                 // Distruzione file json
@@ -308,12 +309,12 @@ namespace Pseven
             ErrorCode = TAbsDBErrorCodes.NoError;
 
             string logfilename = "";
-            if (this.Log != null) { try { logfilename = this.Log.FileName; } catch { logfilename = ""; } }
-            else { this.log = new TLogWrapperAbsDB(); }
+            if (Log != null) { try { logfilename = Log.FileName; } catch { logfilename = ""; } }
+            else { log = new TLogWrapperAbsDB(); }
             // Passaggio dati verso DLL
             try
             {
-                connidx = ImportAbsDBDll.CallNewConnection(DBFileName, JsonFilePath, _errorcode, logfilename, this.Log.MaxSizeMB, this.Log.Level);
+                connidx = ImportAbsDBDll.CallNewConnection(DBFileName, JsonFilePath, _errorcode, logfilename, Log.MaxSizeMB, Log.Level);
                 ErrorCode = (TAbsDBErrorCodes)Convert.ToInt32(_errorcode.ToString());
                 lasterrorcode = ErrorCode;
                 a = new TAbsDBQueryJson(connidx, new TListAbsDBQuery());

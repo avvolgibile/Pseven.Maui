@@ -28,7 +28,7 @@ namespace Pseven.Data
             await DataBase.CreateTableAsync<ArticoloNote>();
         }
 
-        //DOCUMENTO
+        //Documento
         public async Task<List<Documento>> GetDocumentiAsync()
         {
             await Init();
@@ -39,22 +39,22 @@ namespace Pseven.Data
             await Init();
             return await DataBase.Table<Documento>().Where(x=>x.DocumentoId == id).FirstOrDefaultAsync();
         }
-        public async Task<int> SaveDocumentoAsync(Documento documento)
+        public async Task<int> SaveDocumentoAsync(Documento Documento)
         {
             await Init();
-            if(documento.DocumentoId != 0)
+            if(Documento.DocumentoId != 0)
             {
-                return await DataBase.UpdateAsync(documento);
+                return await DataBase.UpdateAsync(Documento);
             }
             else
             {
-                return await DataBase.InsertAsync(documento);
+                return await DataBase.InsertAsync(Documento);
             }
         }
-        public async Task<int> DeleteDocumentoAsync(Documento documento)
+        public async Task<int> DeleteDocumentoAsync(Documento Documento)
         {
             await Init();
-            return await DataBase.DeleteAsync(documento);
+            return await DataBase.DeleteAsync(Documento);
         }
 
         //CLIENTE

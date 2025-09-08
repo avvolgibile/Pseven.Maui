@@ -1,13 +1,138 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
-            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
-            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
-            xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"  
-            x:Class="Pseven.Views.DocumentiApertiPage"  
-            Title="DocumentiApertiPage">  
-   <VerticalStackLayout>
-        <syncfusion:SfDataGrid x:Name="dataGrid"  
-               AutoGenerateColumnsMode="SmartReset"  
-               ItemsSource="{Binding }" />
-    </VerticalStackLayout>  
+<ContentPage
+    x:Class="Pseven.Views.DocumentiApertiPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sfGrid="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
+    xmlns:viewmodels="clr-namespace:Pseven.ViewModels"
+    xmlns:conv="clr-namespace:Pseven.Converters"
+    
+    Title="Documenti Aperti">
+
+    <!-- Risorse (converter per evidenziare importi) -->
+    <!--<ContentPage.Resources>
+        <conv:ImportoToBackgroundConverter x:Key="ImportoBgConverter" Soglia="500" />
+    </ContentPage.Resources>-->
+
+    <ContentPage.BindingContext>
+        <viewmodels:DocumentiApertiViewModels/>
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto,*" Padding="10" RowSpacing="8">
+
+        <!-- FILTRI + AZIONI -->
+        <Grid RowDefinitions="Auto,Auto"
+              ColumnDefinitions="*,*,*,Auto,Auto"
+              ColumnSpacing="8" RowSpacing="8">
+
+            <!-- Filtri -->
+            <Grid Grid.Row="0" Grid.ColumnSpan="5"
+                  ColumnDefinitions="2*,2*,2*,Auto,Auto" ColumnSpacing="8">
+                <VerticalStackLayout Grid.Column="0" Spacing="4">
+                    <Label Text="Cliente" FontAttributes="Bold"/>
+                    <Picker ItemsSource="{Binding Clienti}"
+                            ItemDisplayBinding="{Binding Nome}"
+                            SelectedItem="{Binding ClienteSelezionato}" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1" Spacing="4">
+                    <Label Text="Agente" FontAttributes="Bold"/>
+                    <Picker ItemsSource="{Binding Agenti}"
+                            ItemDisplayBinding="{Binding Nome}"
+                            SelectedItem="{Binding AgenteSelezionato}" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="2" Spacing="4">
+                    <Label Text="Zona" FontAttributes="Bold"/>
+                    <Picker ItemsSource="{Binding Zone}"
+                            SelectedItem="{Binding ZonaSelezionata}" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="3" Spacing="4">
+                    <Label Text="Data" FontAttributes="Bold"/>
+                    <DatePicker Date="{Binding DataFiltro}" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="4" Spacing="4" HorizontalOptions="End">
+                    <Label Text=" " IsVisible="False"/>
+                    <Button Text="Ripristina filtro"
+                            Command="{Binding RipristinaFiltroCommand}" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- Pulsanti azione -->
+            <ScrollView Grid.Row="1" Grid.ColumnSpan="5" Orientation="Horizontal">
+                <HorizontalStackLayout Spacing="8">
+                    <Button Text="Anteprima elenco Doc"
+                            Command="{Binding AnteprimaElencoCommand}" />
+                    <Button Text="Converti in preventivo"
+                            Command="{Binding ConvertiInPreventivoCommand}" />
+                    <Button Text="Stampa ed Elimina"
+                            Command="{Binding StampaEdEliminaCommand}" />
+                    <Button Text="Elimina Documento"
+                            Command="{Binding EliminaDocumentoCommand}" />
+                    <Button Text="ORDINI"
+                            Command="{Binding OrdiniCommand}" />
+                    <Button Text="PREVENTIVI"
+                            Command="{Binding PreventiviCommand}" />
+                    <Button Text="Uscita"
+                            Command="{Binding UscitaCommand}" />
+                </HorizontalStackLayout>
+            </ScrollView>
+        </Grid>
+
+        <!-- GRIGLIA -->
+        <sfGrid:SfDataGrid Grid.Row="1"
+                           ItemsSource="{Binding DocumentiAperti}"
+                           SelectionMode="Single"
+                           SelectionChanged="DataGrid_SelectionChanged"
+                           AutoGenerateColumnsMode="None"
+                           HeaderRowHeight="36"
+                           RowHeight="34">
+
+            <sfGrid:SfDataGrid.Columns>
+                <sfGrid:DataGridCheckBoxColumn MappingName="Selezionato" HeaderText="C" Width="50"/>
+                <sfGrid:DataGridTextColumn MappingName="RagioneSocialeRiga" HeaderText="Ragionesociale riga" Width="260"/>
+                <sfGrid:DataGridTextColumn MappingName="Citta" HeaderText="Città" Width="140"/>
+                <sfGrid:DataGridTextColumn MappingName="Prov" HeaderText="Prov" Width="70"/>
+
+                <!-- Importo con sfondo condizionale -->
+                <sfGrid:DataGridTemplateColumn MappingName="Importo" HeaderText="Importo" Width="120">
+                    <sfGrid:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Padding="6"
+                                  BackgroundColor="{Binding Importo, Converter={StaticResource ImportoBgConverter}}">
+                                <Label Text="{Binding Importo, StringFormat='{}{0:N2}'}"
+                                       HorizontalTextAlignment="End"
+                                       VerticalTextAlignment="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </sfGrid:DataGridTemplateColumn.CellTemplate>
+                </sfGrid:DataGridTemplateColumn>
+
+                <sfGrid:DataGridTextColumn MappingName="NoteDocumento" HeaderText="NoteDocumento" Width="240"/>
+                <sfGrid:DataGridTextColumn MappingName="NoteCliente" HeaderText="NoteCliente" Width="240"/>
+                <sfGrid:DataGridTextColumn MappingName="NumeroDocumento" HeaderText="NumeroDocumento" Width="150"/>
+            </sfGrid:SfDataGrid.Columns>
+
+
+            <FlyoutBase.ContextFlyout>
+                <MenuFlyout >
+                    <MenuFlyoutItem Text="Elimina"
+                 Command="{Binding EliminaCommand}"
+                 CommandParameter="{Binding DgwItemselezionatoConTastoDx}" />
+                    <MenuFlyoutSeparator></MenuFlyoutSeparator>
+                    <MenuFlyoutItem Text="Esporta"
+                    Command="{Binding EsportaCommand}"
+                    CommandParameter="{Binding DgwItemselezionatoConTastoDx}" />
+
+                </MenuFlyout>
+            </FlyoutBase.ContextFlyout>
+
+
+
+
+
+        </sfGrid:SfDataGrid>
+    </Grid>
 </ContentPage>

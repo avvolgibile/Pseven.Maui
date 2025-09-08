@@ -19,7 +19,7 @@ namespace Pseven
         public static string Supplemento = " (Suppl.)";
 
         public static int CifreDecimali_Dettaglio;//si intende:prezzo fornitore/acquisto, prezzo vendita e importo tot riga
-        public static int CifreDecimali_Totali;//tot documento
+        public static int CifreDecimali_Totali;//tot Documento
         public static int CifreDecimali_Quantita;//
         //88888888888888888888888888888888888888888888888888888888888888888888
         public static string AvvisoCondiviso;
@@ -33,11 +33,7 @@ namespace Pseven
         // public static bool      apriArticoloClienteInesistenteForm = true;//quando da reinserisci o ristampa etichetta non si deve aprire il form articolo inesistente
         public static List<int> ListSpostArticoli = new List<int>();
 
-        //public static Form1 _Form1;
-        //public static DocumentoForm _DocumentoForm;
-        //public static ElencoDocumentiApertiForm _ElencoDocumentiApertiForm;
-        //public static Storico_Documenti _Storico_Documenti;
-        //public static MiniForm _MiniForm;
+        
     }
 
     public class ProprietàTessuto

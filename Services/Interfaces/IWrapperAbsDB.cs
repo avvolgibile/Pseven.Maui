@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pseven
+namespace Pseven.Services.Interfaces
 {
     public interface IAbsDBQuery
     {

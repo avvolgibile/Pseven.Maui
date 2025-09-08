@@ -1,4 +1,4 @@
-﻿namespace Pseven.Maui.Services
+﻿namespace Pseven.Services
 {
     public static class DatabaseHelper//questa classe serve per copiare il database dalla cartella delle risorse alla cartella dei dati dell'applicazione
     {

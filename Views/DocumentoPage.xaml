@@ -4,15 +4,187 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:Pseven.Controls"
+     xmlns:sfgrid="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid" 
     xmlns:converters="clr-namespace:Pseven.Converters"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     
     Title="Documento"
     >
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="DOCUMENTO"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Colori / stili -->
+            <Color x:Key="AccentYellow">#FFF59D</Color>
+            <Style x:Key="FieldLabel" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+
+            <!-- Stile header DataGrid -->
+            <!--<sfgrid:DataGridHeaderStyle x:Key="GridHeaderStyle"
+                                        BackgroundColor="#F0F0F0"
+                                        TextColor="Black"
+                                        FontAttributes="Bold" />-->
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid Padding="12" RowSpacing="10"
+          RowDefinitions="Auto,Auto,*,Auto">
+
+        <!-- ROW 0: intestazione -->
+        <Grid ColumnSpacing="10" ColumnDefinitions="Auto,Auto,100,Auto,*,Auto,Auto">
+            <Label Text="Ordine" Style="{StaticResource FieldLabel}" />
+            <Label Grid.Column="1" Text="N°" VerticalOptions="Center" />
+            <Entry Grid.Column="2" Text="{Binding Numero}" IsReadOnly="True" />
+            <Label Grid.Column="3" Text="Data" VerticalOptions="Center" />
+            <DatePicker Grid.Column="4" Date="{Binding Data}" />
+            <CheckBox Grid.Column="5" IsChecked="{Binding Sospeso}" />
+            <Label Grid.Column="6" Text="Ordine Sospeso" VerticalOptions="Center" />
+        </Grid>
+
+        <!-- ROW 1: cliente + barra pulsanti -->
+        <Grid Grid.Row="1" RowDefinitions="Auto,Auto">
+            <!-- Cliente -->
+            <Grid ColumnSpacing="10" ColumnDefinitions="Auto,*">
+                <Label Text="Cliente" Style="{StaticResource FieldLabel}" />
+                <Entry Grid.Column="1" Text="{Binding ClienteDescrizione}" />
+            </Grid>
+
+            <!-- Toolbar comandi -->
+            <ScrollView Grid.Row="1" Orientation="Horizontal" Margin="0,8,0,0" HorizontalScrollBarVisibility="Never">
+                <HorizontalStackLayout Spacing="8">
+                    <Button Text="WhatsApp" Command="{Binding WhatsAppCommand}" />
+                    <Button Text="Invia Doc." Command="{Binding InviaDocumentoCommand}" />
+                    <Button Text="Esporta" Command="{Binding EsportaCommand}" />
+                    <Button Text="Anteprima Dett." Command="{Binding AnteprimaDettaglioCommand}" />
+                    <Button Text="Anteprima Documento" Command="{Binding AnteprimaDocumentoCommand}" />
+                    <Button Text="Stampa ed Email" Command="{Binding StampaEmailCommand}" />
+                    <Button Text="Stampa" Command="{Binding StampaCommand}" />
+                    <Button Text="Uscita" Command="{Binding UscitaCommand}" />
+                </HorizontalStackLayout>
+            </ScrollView>
+        </Grid>
+
+        <!-- ROW 2: DataGrid -->
+        <sfgrid:SfDataGrid Grid.Row="2"
+                           ItemsSource="{Binding DocumentoCollection}"
+                          
+                           SelectionChanged="DataGrid_SelectionChanged"
+                        
+                           SelectionMode="Single"
+                           >
+
+            <sfgrid:SfDataGrid.Columns>
+
+                <!-- Selezione -->
+                <sfgrid:DataGridCheckBoxColumn MappingName="Selezionato" HeaderText="" Width="40" />
+
+                <!-- Descrizione articolo -->
+                <sfgrid:DataGridTextColumn MappingName="ArticoloDescrizione" HeaderText="Articoli" />
+
+                <sfgrid:DataGridTextColumn MappingName="UM" HeaderText="UM" Width="60" />
+                <sfgrid:DataGridNumericColumn MappingName="Quantita" HeaderText="Quantità" Format="N0" Width="90" />
+                <sfgrid:DataGridNumericColumn MappingName="L" HeaderText="L" Format="N0" Width="80" />
+                <sfgrid:DataGridNumericColumn MappingName="H" HeaderText="H" Format="N0" Width="80" />
+                <sfgrid:DataGridNumericColumn MappingName="Pezzi" HeaderText="Pezzi" Format="N0" Width="70" />
+                <sfgrid:DataGridNumericColumn MappingName="Prezzo" HeaderText="Prezzo" Format="N2" Width="100" />
+                <sfgrid:DataGridNumericColumn MappingName="Sconto" HeaderText="Sconto" Format="N0" Width="90" />
+                <sfgrid:DataGridNumericColumn MappingName="IVA" HeaderText="Iva" Format="N0" Width="70" />
+
+                <!-- Importo (giallo) -->
+                <sfgrid:DataGridTemplateColumn MappingName="Importo" HeaderText="Importo" Width="120">
+                    <sfgrid:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Padding="4" BackgroundColor="{StaticResource AccentYellow}">
+                                <Label Text="{Binding Importo, StringFormat='{}{0:N2}'}"
+                                       HorizontalTextAlignment="End" VerticalTextAlignment="Center" />
+                            </Grid>
+                        </DataTemplate>
+                    </sfgrid:DataGridTemplateColumn.CellTemplate>
+                </sfgrid:DataGridTemplateColumn>
+
+                <!-- Data (giallo) -->
+                <sfgrid:DataGridTemplateColumn MappingName="Data" HeaderText="Data" Width="120">
+                    <sfgrid:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Padding="4" BackgroundColor="{StaticResource AccentYellow}">
+                                <Label Text="{Binding Data, StringFormat='{}{0:dd/MM/yyyy}'}"
+                                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                            </Grid>
+                        </DataTemplate>
+                    </sfgrid:DataGridTemplateColumn.CellTemplate>
+                </sfgrid:DataGridTemplateColumn>
+
+                <sfgrid:DataGridTextColumn MappingName="Comandi" HeaderText="Comandi" Width="90" />
+                <sfgrid:DataGridTextColumn MappingName="Colore" HeaderText="Colore" Width="90" />
+                <sfgrid:DataGridTextColumn MappingName="Valori" HeaderText="Valori" Width="90" />
+                <sfgrid:DataGridTextColumn MappingName="Variante" HeaderText="Variante" Width="110" />
+                <sfgrid:DataGridTextColumn MappingName="Note" HeaderText="NOTE" />
+            </sfgrid:SfDataGrid.Columns>
+
+
+
+            <FlyoutBase.ContextFlyout>
+                <MenuFlyout >
+                    <MenuFlyoutItem Text="Elimina"
+                  Command="{Binding EliminaCommand}"
+                  CommandParameter="{Binding DgwItemselezionatoConTastoDx}" />
+                    <MenuFlyoutSeparator></MenuFlyoutSeparator>
+                    <MenuFlyoutItem Text="Ristampa Etichetta"
+   Command="{Binding RistampaEtichettaCommand}"
+   CommandParameter="{Binding DgwItemselezionatoConTastoDx}" />
+                    <MenuFlyoutSeparator></MenuFlyoutSeparator>
+                    <MenuFlyoutItem Text="Reinserisci"
+         Command="{Binding ReinserisciCommand}"
+          CommandParameter="{Binding DgwItemselezionatoConTastoDx}" />
+                </MenuFlyout>
+            </FlyoutBase.ContextFlyout>
+
+        </sfgrid:SfDataGrid>
+
+        <!-- ROW 3: footer -->
+        <Grid Grid.Row="3" ColumnSpacing="12" ColumnDefinitions="*,Auto,Auto">
+
+            <!-- Sinistra: Rappresentanza + Note -->
+            <VerticalStackLayout Spacing="8">
+                <Grid ColumnSpacing="8" ColumnDefinitions="Auto,60,*,Auto,120">
+                    <Label Text="Rappresentanza" Style="{StaticResource FieldLabel}" Grid.ColumnSpan="5" />
+                    <Label Grid.Column="0" Text="Agente" />
+                    <Entry Grid.Column="1" Text="{Binding Agente}" />
+                    <Label Grid.Column="3" Text="Provv €" />
+                    <Entry Grid.Column="4" Text="{Binding Provvigione, StringFormat='{}{0:N2}'}"
+                           HorizontalTextAlignment="End" />
+                </Grid>
+
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                    <Label Text="Note Documento" Style="{StaticResource FieldLabel}" />
+                    <Editor Grid.Column="1" Text="{Binding NoteDocumento}" AutoSize="TextChanges" HeightRequest="60" />
+                </Grid>
+            </VerticalStackLayout>
+
+            <!-- Centro: pulsanti azione righe -->
+            <HorizontalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Start">
+                <Button Text="Taglia Articoli" Command="{Binding TagliaArticoliCommand}" />
+                <Button Text="Incolla Articoli" Command="{Binding IncollaArticoliCommand}" />
+                <Button Text="Sposta su doc nuovo" Command="{Binding SpostaSuDocNuovoCommand}" />
+            </HorizontalStackLayout>
+
+            <!-- Destra: totali -->
+            <VerticalStackLayout Grid.Column="2" Spacing="6" HorizontalOptions="End" VerticalOptions="EndAndExpand">
+                <HorizontalStackLayout>
+                    <Label Text="Tot. pezzi:" />
+                    <Label Text="{Binding TotalePezzi, StringFormat='{}{0:N2}'}" FontAttributes="Bold" />
+                </HorizontalStackLayout>
+
+                <Frame Padding="10,6" BackgroundColor="{StaticResource AccentYellow}"
+                       HasShadow="False" CornerRadius="6">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="Totale Documento" FontAttributes="Bold" />
+                        <Label Grid.Column="1" Text="{Binding TotaleDocumento, StringFormat='€ {0:N2}'}"
+                               FontAttributes="Bold" />
+                    </Grid>
+                </Frame>
+            </VerticalStackLayout>
+        </Grid>
+
+    </Grid>
 </ContentPage>

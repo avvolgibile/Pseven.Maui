@@ -1,69 +1,109 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using System.IO;
-using Pdf = Pseven.Services.PdfArticoliService; // cambia con il namespace corretto
+﻿
 using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Net.Http.Json;
+using CommunityToolkit.Mvvm.Input;
 using Pseven.Models;
 using Pseven.Services;
+using Syncfusion.Maui.DataGrid;
+using System.Collections.ObjectModel;
+using System.Linq;
+
 
 namespace Pseven.ViewModels;
 
 public partial class StoricoArticoliViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private ObservableCollection<StoricoArticolo> articoli;
+    public Func<string, string, string, Task>? ShowAlert; //serve a far comparire l' allert solo sulla page relativa, altrimenti manda a video la main page, mettere anche nel costruttore della page   _viewModel.ShowAlert = (title, msg, ok) => this.DisplayAlert(title, msg, ok);
+    public ObservableCollection<StoricoArticolo> StoricoArticoli { get; set; } = new();
+
+    [ObservableProperty]    
+    private StoricoArticolo? dgwItemselezionatoConTastoDx;  
+
+  
+    
+    private readonly StoricoArticoliService _service = new();
+
 
     public StoricoArticoliViewModel()
     {
+        
+        CaricaDati();
 
-        //articoli = new ObservableCollection<StoricoArticolo>();
-        //_ = CaricaDatiAsync();
+        
+
     }
 
-    //private async Task CaricaDatiAsync()
-    //{
-    //    try
-    //    {
-    //        using var client = new HttpClient();
-    //        var risultato = await client.GetFromJsonAsync<List<StoricoArticolo>>("https://localhost:7107/api/DettaglioDocumento");
+    [RelayCommand]
+    async Task RistampaEtichetta(StoricoArticolo? item)
+    {
+        if (item == null) return;
+
+        // Mostra la message box con l'ID della riga
+        await MainThread.InvokeOnMainThreadAsync(async () =>
+        {
+           // await App.Current.MainPage.DisplayAlert("Modifica", $"ID: {item.H}", "OK");
+            await ShowAlert("Modifica", $"ID: {item.H}", "OK");
+            
+        });
+    }
+
+    [RelayCommand]
+    async Task Reinserisci(StoricoArticolo? item)
+    {
+        if (item == null) return;
+
+        // Mostra la message box con l'ID della riga
+        await MainThread.InvokeOnMainThreadAsync(async () =>
+        {
+            // await App.Current.MainPage.DisplayAlert("Modifica", $"ID: {item.H}", "OK");
+            await ShowAlert("Modifica", $"ID: {item.H+"chichichi"}", "OK");
+        });
+    }
 
 
-    //       // Console.WriteLine(risultato==null? "risultato null":"trovati risultati");
-            
-            
-            
-    //        if (risultato != null)
-    //            Articoli = new ObservableCollection<StoricoArticolo>(risultato);
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Console.WriteLine("Errore nel caricamento: " + ex.Message);
-    //    }
-    //}
-   
 
+
+    private async void CaricaDati()
+    {
+        var lista = await _service.GetAllAsync();
+        foreach (var item in lista)
+            StoricoArticoli.Add(item);
+        
+    }
     [RelayCommand]
     public async Task TestPdfManualeAsync()
     {
 
 
-        if (Articoli is null || !Articoli.Any())
+        if (StoricoArticoli is null || !StoricoArticoli.Any())
         {
             await Shell.Current.DisplayAlert("Attenzione", "Nessun articolo da stampare", "OK");
             return;
         }
 
-        await PdfArticoliService.MostraAnteprimaPdfAsync(Articoli.ToList());
+        try
+        {
+            // 2) Genera il PDF
+            var lista = StoricoArticoli.ToList();
+            var pdfBytes = PdfArticoliService.GeneraPdfDallaLista(lista);
 
-        //var articoloFinto = new StoricoArticolo
-        //{
-        //    Articoli = "Articolo fittizio per test PDF"
-        //};
+            // 3) Salva su file temporaneo
+            var fileName = $"StoricoArticoli_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+            var filePath = Path.Combine(FileSystem.CacheDirectory, fileName);
+            File.WriteAllBytes(filePath, pdfBytes);
 
-        //var listaFinta = new List<StoricoArticolo> { articoloFinto };
-
-        //await PdfArticoliService.MostraAnteprimaPdfAsync(listaFinta);
+            // 4) Apri con il viewer di sistema
+            await Launcher.Default.OpenAsync(
+                new OpenFileRequest("Storico articoli", new ReadOnlyFile(filePath))
+            );
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex);
+            await Shell.Current.DisplayAlert("Errore", ex.Message, "OK");
+        }
     }
 
+
 }
+
+

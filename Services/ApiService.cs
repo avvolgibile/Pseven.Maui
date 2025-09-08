@@ -1,9 +1,9 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
 using System.Collections.ObjectModel;
-using Pseven.Maui.Models;
+using Pseven.Models;
 
-namespace Pseven.Maui.Services;
+namespace Pseven.Services;
 
 public class ApiService
 {

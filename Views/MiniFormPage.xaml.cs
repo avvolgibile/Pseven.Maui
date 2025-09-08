@@ -5,7 +5,7 @@ namespace Pseven.Views;
 
 public partial class MiniFormPage : ContentPage
 {
-	public MiniFormPage(OrdineViewModel viewmodel)
+	public MiniFormPage(MainPageViewModel viewmodel)
 	{
 		InitializeComponent();
 		BindingContext = viewmodel;

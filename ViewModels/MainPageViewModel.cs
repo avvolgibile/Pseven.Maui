@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Pseven.ViewModels
 {
-    public partial class OrdineViewModel : BaseViewModel, IDisposable
+    public partial class MainPageViewModel : BaseViewModel, IDisposable
     {
         #region Proprietà
         private bool _disposedValue;
@@ -110,7 +110,7 @@ namespace Pseven.ViewModels
         private string? _listino = string.Empty;
 
         [ObservableProperty]
-        private Documento _documento = new();
+        private Documento _Documento = new();
 
         [ObservableProperty]
         private DettaglioDocumento? _dettaglioDocumento = new();
@@ -210,6 +210,8 @@ namespace Pseven.ViewModels
         #endregion
 
         #region Eventi
+
+
         #endregion
 
         #region Comandi
@@ -218,7 +220,7 @@ namespace Pseven.ViewModels
         #endregion
 
         #region Costruttori
-        public OrdineViewModel(InternalDataBase internaldatabase, ExternalDataBase externaldatabase)
+        public MainPageViewModel(InternalDataBase internaldatabase, ExternalDataBase externaldatabase)
         {
             _internalDataBase = internaldatabase;
             _externalDataBase = externaldatabase;
@@ -515,20 +517,13 @@ namespace Pseven.ViewModels
                 ControlliInterfaccia.MessaggioErrore = string.Empty;
             }
         }
-        [RelayCommand]
-        private void AggiungiDettaglioDocumento()
-        {
-            if (Documento is not null && DettaglioDocumento is not null)
-            {
-                Documento.DettagliDocumento.Add(DettaglioDocumento);
-                DettaglioDocumento = new DettaglioDocumento();
-            }
 
-        }
+        #region Apertura views Page
         [RelayCommand]
-        private static void ApriViewDocumento()
+        private static void ApriDocumento()
         {
             Application.Current.OpenWindow(new Window(new DocumentoPage(new DocumentoViewModel())));
+
         }
         [RelayCommand]
         private static void ApriAntemprima()
@@ -537,32 +532,20 @@ namespace Pseven.ViewModels
         }
 
 
-
         [RelayCommand]
         private static async Task ApriDocumentiAperti()
         {
 
-            try
-            {
+            //var vm2 = new DocumentiApertiViewModels();
+            //var page2 = new DocumentiApertiPage { BindingContext = vm2 };
 
-                await Shell.Current.GoToAsync("///StoricoArticoliPage");
-            }
-            catch (Exception ex)
-            {
+            //Application.Current.OpenWindow(new Window(page2));
 
-                await Application.Current.MainPage.DisplayAlert("Errore", ex.Message, "OK");
-                System.Diagnostics.Debug.WriteLine("ERRORE APERTURA PAGINA: " + ex);
-            }
-
-            //Application.Current.OpenWindow(new Window(new DocumentiApertiPage()));
-          
-
+            Application.Current.OpenWindow(new Window(new DocumentiApertiPage(new DocumentiApertiViewModels())));
         }
-        [RelayCommand]
-        private static void ApriViewArticoli()
-        {
-            Application.Current.OpenWindow(new Window(new ArticoliPage(new ArticoliViewModel(new InternalDataBase()))));
-        }
+
+
+      
         [RelayCommand]
         private void ApriMiniForm()
         {
@@ -601,20 +584,6 @@ namespace Pseven.ViewModels
         {
 
         }
-      
-        //[RelayCommand]
-        //private void StampaEtichetta()
-        //{
-        //    //System.Drawing.Printing.PrintDocument printetichetta1 = new System.Drawing.Printing.PrintDocument();
-        //    //Bitmap bitmap = GraphicsDrawable1.GetType().GetMethod("Draw").Invoke(GraphicsDrawable1, null) as Bitmap;
-        //    PrintService printService = new();
-        //    //printService.PrintDrawable(GraphicsDrawable1, 400, 400);
-        //    //var bitmap = GraphicsService.ConvertDrawableToBitmap(GraphicsDrawable1, 330, 135);
-        //    if (DrawingSurface1 is not null)
-        //    {
-        //        printService.PrintBitmap(DrawingSurface1);
-        //    }
-        //}
 
         private void Printetichetta_Page1(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
@@ -628,15 +597,21 @@ namespace Pseven.ViewModels
 
         }
 
-       
-        
-        
-        
-        
-        
-        
-        
-        
+        [RelayCommand]
+        private void ApriStoricoOrdiniAFornitori()
+        {
+            Application.Current.OpenWindow(new Window(new StoricoOrdiniAFornitoriPage()));
+
+        }
+
+        #endregion
+
+
+
+
+
+
+
         [RelayCommand]
         private void NuovaEtichetta()
         {

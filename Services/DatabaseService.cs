@@ -1,6 +1,6 @@
 ﻿using SQLite;
 
-namespace Pseven.Maui.Services;
+namespace Pseven.Services;
 
 public class DatabaseService
 {

@@ -1,94 +1,92 @@
 ﻿using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using Pseven.Models;
+using QuestContainer = QuestPDF.Infrastructure.IContainer;
+using Pseven.Models;    
 
-namespace Pseven.Services
+namespace Pseven.Services;
+
+public static class PdfArticoliService
 {
-    public static class PdfArticoliService
+    // <-- CAMBIA QUI i nomi delle proprietà secondo il tuo modello StoricoArticoli
+    // Header = titolo colonna nel PDF
+    // Prop   = nome della proprietà nel Model (rispetta maiuscole/minuscole)
+    private static readonly (string Header, string Prop, float? ConstWidth, int Relative, string? Format)[] ColSpec =
     {
+        ("Codice",      "Codice",      70, 0,  null),
+        ("Descrizione", "Descrizione", null, 3, null),    // colonna elastica
+        ("Q.tà",        "Quantita",    45, 0,  "0.##"),
+        ("Prezzo",      "Prezzo",      55, 0,  "0.00"),
+        // Aggiungi/rimuovi righe secondo le colonne che vuoi nel PDF
+        // ("L", "L", 45, 0, "0.##"),
+        // ("H", "H", 45, 0, "0.##"),
+    };
 
-public static byte[] GeneraPdfA4DallaLista(List<StoricoArticolo> articoli)
+    public static byte[] GeneraPdfDallaLista(List<StoricoArticolo> articoli)
     {
-        var document = Document.Create(container =>
+        return Document.Create(doc =>
         {
-            container.Page(page =>
+            doc.Page(page =>
             {
-                page.Size(PageSizes.A4);
-                page.Margin(20);
+                page.Size(PageSizes.A4.Landscape());
+                page.Margin(16);
+                page.DefaultTextStyle(x => x.FontSize(8));
+
                 page.Content().Table(table =>
                 {
-                    // Recupera tutte le proprietà pubbliche della classe StoricoArticolo
-                    var properties = typeof(StoricoArticolo).GetProperties();/////
-
-                    // Definizione delle colonne
-                    table.ColumnsDefinition(columns =>
+                    // Definizione colonne: numeriche strette (Constant), testo elastico (Relative)
+                    table.ColumnsDefinition(cols =>
                     {
-                        foreach (var _ in properties)
-                            columns.RelativeColumn();
-                    });
-
-                    // Intestazione della tabella
-                    table.Header(header =>
-                    {
-                        foreach (var prop in properties)
+                        foreach (var c in ColSpec)
                         {
-                            header.Cell().Element(container =>
-                                container
-                                    .Padding(3)
-                                    .Border(1)
-                                    .BorderColor(QuestPDF.Helpers.Colors.Black)
-                                    .Shrink() // lo mettiamo prima del .Text()
-                                    .Text(prop.Name).Bold().FontSize(8)
-                            );
+                            if (c.ConstWidth.HasValue)
+                                cols.ConstantColumn(c.ConstWidth.Value);
+                            else
+                                cols.RelativeColumn(c.Relative > 0 ? c.Relative : 1);
                         }
                     });
 
-                    // Righe dati
-                    foreach (var articolo in articoli)
-                    {
-                        foreach (var prop in properties)
-                        {
-                            var value = prop.GetValue(articolo)?.ToString() ?? string.Empty;
+                    QuestContainer Cell(QuestContainer c) => c
+                        .Padding(1)
+                        .Border(0.25f)
+                        .BorderColor(QuestPDF.Helpers.Colors.Grey.Lighten2)
+                        .MinWidth(10);
 
-                            table.Cell().Element(container =>
-                                container
-                                    .Padding(3)
-                                    .Border(1)
-                                    .BorderColor(QuestPDF.Helpers.Colors.Grey.Lighten2)
-                                    .Shrink()
-                                    .Text(value).FontSize(8)
-                            );
+                    // Header
+                    table.Header(h =>
+                    {
+                        foreach (var c in ColSpec)
+                            h.Cell().Element(Cell).Text(c.Header);
+                    });
+
+                    // Righe
+                    var t = typeof(StoricoArticolo);
+                    foreach (var a in articoli)
+                    {
+                        foreach (var c in ColSpec)
+                        {
+                            var prop = t.GetProperty(c.Prop);
+                            var raw = prop?.GetValue(a);
+
+                            // formattazione basica numeri/date
+                            string value = raw switch
+                            {
+                                null => string.Empty,
+                                IFormattable f when !string.IsNullOrEmpty(c.Format) => f.ToString(c.Format, null),
+                                DateTime dt => dt.ToString("dd/MM/yyyy"),
+                                _ => raw.ToString() ?? string.Empty
+                            };
+
+                            table.Cell().Element(Cell).Text(tw =>
+                            {
+                                tw.Span(value).WrapAnywhere();
+                                // se vuoi troncare a 1 riga: .MaxLines(1).Ellipsis();
+                            });
                         }
                     }
                 });
             });
-        });
-
-        return document.GeneratePdf();
-    }
-    public static async Task MostraAnteprimaPdfAsync(List<StoricoArticolo> articoli)
-        {
-            try
-            {
-                var pdfBytes = GeneraPdfA4DallaLista(articoli);
-                var filePath = Path.Combine(FileSystem.CacheDirectory, "AnteprimaArticoli.pdf");
-                File.WriteAllBytes(filePath, pdfBytes);
-
-                await Launcher.Default.OpenAsync(new OpenFileRequest
-                {
-                    File = new ReadOnlyFile(filePath)
-                });
-            }
-            catch (Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Errore PDF", ex.Message, "OK");
-            }
-        }
-
+        })
+        .GeneratePdf();
     }
 }

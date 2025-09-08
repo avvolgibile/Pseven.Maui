@@ -12,7 +12,7 @@
     
     <ShellContent
         Title="Ordine"
-        ContentTemplate="{DataTemplate views:OrdinePage}"
+        ContentTemplate="{DataTemplate views:MainPage}"
         Route="OrdineView" />
 
     <ShellContent Title="Documenti Aperti"
