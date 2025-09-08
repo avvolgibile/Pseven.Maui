@@ -96,8 +96,8 @@ public partial class DocumentiApertiPage : ContentPage
             if (row != null)
             {
                 vm.DgwItemselezionatoConTastoDx =
-                    row as DocumentoAperto ??
-                    (row as DataGridRowInfo)?.RowData as DocumentoAperto;
+                    row as StoricoDocumento ??
+                    (row as DataGridRowInfo)?.RowData as StoricoDocumento;
             }
         }
     }

@@ -5,10 +5,10 @@ namespace Pseven.Services
     public class DocumentiApestiService
     {
         private readonly DatabaseService _databaseService = new();
-        public async Task<List<DocumentoAperto>> GetAllAsync()
+        public async Task<List<StoricoDocumento>> GetAllAsync()
         {
             var conn = await _databaseService.GetConnectionAsync();
-            return conn.Table<DocumentoAperto>().ToList();
+            return conn.Table<StoricoDocumento>().ToList();
         }
     }
 }

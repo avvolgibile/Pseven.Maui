@@ -19,14 +19,14 @@ namespace Pseven.ViewModels
     public partial class DocumentiApertiViewModels : ObservableObject
     {
 
-        public ObservableCollection<DocumentoAperto> DocumentiAperti { get; set; } = new();
+        public ObservableCollection<StoricoDocumento> DocumentiAperti { get; set; } = new();
 
         private readonly DocumentiApestiService _service = new();
 
         public Func<string, string, string, Task>? ShowAlert; //serve a far comparire l' allert solo sulla page relativa, altrimenti manda a video la main page, mettere anche nel costruttore della page   _viewModel.ShowAlert = (title, msg, ok) => this.DisplayAlert(title, msg, ok);
 
         [ObservableProperty]
-        private DocumentoAperto? dgwItemselezionatoConTastoDx;
+        private StoricoDocumento? dgwItemselezionatoConTastoDx;
 
         public DocumentiApertiViewModels()
         {
@@ -50,7 +50,7 @@ namespace Pseven.ViewModels
 
 
         [RelayCommand]
-        async Task Elimina(DocumentoAperto? item)
+        async Task Elimina(StoricoDocumento? item)
         {
             if (item == null) return;
 
@@ -64,7 +64,7 @@ namespace Pseven.ViewModels
         }
 
         [RelayCommand]
-        async Task Esporta(DocumentoAperto? item)
+        async Task Esporta(StoricoDocumento? item)
         {
             if (item == null) return;
 
