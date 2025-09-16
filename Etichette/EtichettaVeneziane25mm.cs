@@ -8,12 +8,19 @@ using Font = Microsoft.Maui.Graphics.Font;
 
 namespace Pseven.Etichette
 {
-    public class EtichettaVeneziane25mm(Etichetta etichetta) : EtichettaDrawBase(etichetta.Larghezza, etichetta.Altezza)
+    public class EtichettaVeneziane25mm : EtichettaDrawBase
     {
-        public override void Draw(ICanvas canvas, RectF dirtyRect)
+
+        public EtichettaVeneziane25mm(Etichetta Etichetta):base(Etichetta)
         {
-            canvas.Font = new Font("thaoma", 8);
-            canvas.DrawString(etichetta.Alias, 5, 9, HorizontalAlignment.Left);
+            
+        }
+        protected override void DrawSpecific(ICanvas canvas, RectF dirtyRect)
+        {
+
+           
+            //canvas.Font = new Font("thaoma", 8);
+            //canvas.DrawString(etichetta.Alias, 5, 9, HorizontalAlignment.Left);
             canvas.DrawString("-25-", 204, 9, HorizontalAlignment.Left);
             canvas.FontColor = Colors.Black;
 
@@ -47,23 +54,23 @@ namespace Pseven.Etichette
 
             ////////////////////////////////////////////////////////////
 
-            canvas.DrawString($"COL {etichetta.Colore}", 230, 9, HorizontalAlignment.Left);
+            canvas.DrawString($"COL {Etichetta.Colore}", 230, 9, HorizontalAlignment.Left);
             canvas.Font = Font.DefaultBold;
-            canvas.DrawString($"L {etichetta.LuceLEtichetta}", 5, 22, HorizontalAlignment.Left);
-            canvas.DrawString($"H {etichetta.H}", 75, 22, HorizontalAlignment.Left);
+            canvas.DrawString($"L {Etichetta.LuceLEtichetta}", 5, 22, HorizontalAlignment.Left);
+            canvas.DrawString($"H {Etichetta.H}", 75, 22, HorizontalAlignment.Left);
             canvas.Font = new Font("thaoma", 8);
-            if (etichetta.Comandi != null && etichetta.Comandi.Contains("TS"))
+            if (Etichetta.Comandi != null && Etichetta.Comandi.Contains("TS"))
             {
                 canvas.FillColor = Colors.LightPink;
                 canvas.FillRectangle(134, 12, 45, 13);
             }
-            canvas.DrawString($"COM {etichetta.Comandi}", 135, 22, HorizontalAlignment.Left);
-            canvas.DrawString($"Hc {etichetta.Hc}", 80, 40, HorizontalAlignment.Left);
-            canvas.DrawString($"Att {etichetta.Attacchi}", 143, 40, HorizontalAlignment.Left);
-            canvas.DrawString(etichetta.PiuGuide ? "+ Guide" : "SENZA Guide", 5, 40, HorizontalAlignment.Left);
-            canvas.DrawString($"*{Math.Round(etichetta.CalcoloFloat, 1)}*", 7, 57, HorizontalAlignment.Left);
+            canvas.DrawString($"COM {Etichetta.Comandi}", 135, 22, HorizontalAlignment.Left);
+            canvas.DrawString($"Hc {Etichetta.Hc}", 80, 40, HorizontalAlignment.Left);
+            canvas.DrawString($"Att {Etichetta.Attacchi}", 143, 40, HorizontalAlignment.Left);
+            canvas.DrawString(Etichetta.PiuGuide ? "+ Guide" : "SENZA Guide", 5, 40, HorizontalAlignment.Left);
+            canvas.DrawString($"*{Math.Round(Etichetta.CalcoloFloat, 1)}*", 7, 57, HorizontalAlignment.Left);
             canvas.Font = Font.DefaultBold;
-            canvas.DrawString(etichetta.Supplemento1, 5, 70, HorizontalAlignment.Left);
+            canvas.DrawString(Etichetta.Supplemento1, 5, 70, HorizontalAlignment.Left);
             canvas.DrawRectangle(190, 28, 80, 30);
             canvas.Font = new Font("thaoma", 8);
             //if (!etichetta.Supplemento1.Contains("catena") && !etichetta.Supplemento1.Contains("Motor"))
@@ -78,8 +85,8 @@ namespace Pseven.Etichette
             //    canvas.DrawString($"{(etichetta.LuceHEtichetta + 30) / 100:0.00} ogni foro", 195, 41, HorizontalAlignment.Left);
             //}
             canvas.Font = new Font("thaoma", 8);
-            canvas.DrawString($"NOTE {etichetta.Note}", 5, 83, HorizontalAlignment.Left);
-            canvas.DrawString($"Rif {etichetta.Rif}", 220, 83, HorizontalAlignment.Left);
+            canvas.DrawString($"NOTE {Etichetta.Note}", 5, 83, HorizontalAlignment.Left);
+            canvas.DrawString($"Rif {Etichetta.Rif}", 220, 83, HorizontalAlignment.Left);
 
 
 

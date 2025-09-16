@@ -31,7 +31,7 @@
             HorizontalOptions="FillAndExpand"
             IsEditable="True"
             IsFilteringEnabled="True"
-            ItemsSource="{Binding DettaglioDocumento.Articolo.Colori}"
+            ItemsSource="{Binding MainPageInput.Articolo.Colori}"
             SelectedItem="{Binding Colore}"
             SelectionChangedCommand="{Binding ColoreSelezionatoCommand}"
             VerticalOptions="Center" />
@@ -50,7 +50,7 @@
             IsEditable="False"
             IsVisible="{Binding ControlliInterfaccia.Varie1Visible}"
             ItemsSource="{Binding ControlliInterfaccia.ListaVarie1}"
-            SelectedItem="{Binding DettaglioDocumento.Varie1}"
+            SelectedItem="{Binding MainPageInput.Varie1}"
             SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
             VerticalOptions="Center" />
         <Label
@@ -68,7 +68,7 @@
             IsEditable="False"
             IsVisible="{Binding ControlliInterfaccia.VersioneVisible}"
             ItemsSource="{Binding ControlliInterfaccia.ListaVersione}"
-            SelectedItem="{Binding DettaglioDocumento.Versione}"
+            SelectedItem="{Binding MainPageInput.Versione}"
             SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
             VerticalOptions="Center" />
         <Label
@@ -84,7 +84,7 @@
             HeightRequest="40"
             HorizontalOptions="FillAndExpand"
             IsVisible="{Binding ControlliInterfaccia.LVisible}"
-            Text="{Binding DettaglioDocumento.LNumber, Mode=TwoWay}"
+            Text="{Binding MainPageInput.LNumber, Mode=TwoWay}"
             VerticalOptions="Center" />
         <Label
             Grid.Row="3"
@@ -99,7 +99,7 @@
             HeightRequest="40"
             HorizontalOptions="FillAndExpand"
             IsVisible="{Binding ControlliInterfaccia.HcVisible}"
-            Text="{Binding DettaglioDocumento.HNumber, Mode=TwoWay}"
+            Text="{Binding MainPageInput.HNumber, Mode=TwoWay}"
             VerticalOptions="Center" />
         <StackLayout
             Grid.Row="3"
@@ -131,7 +131,7 @@
             HeightRequest="40"
             HorizontalOptions="FillAndExpand"
             IsVisible="{Binding ControlliInterfaccia.L2Visible}"
-            Text="{Binding DettaglioDocumento.L2Number, Mode=TwoWay}"
+            Text="{Binding MainPageInput.L2Number, Mode=TwoWay}"
             VerticalOptions="Center" />
         <Label
             Grid.Row="4"
@@ -146,7 +146,7 @@
             HeightRequest="40"
             HorizontalOptions="FillAndExpand"
             IsVisible="{Binding ControlliInterfaccia.SpDxVisible}"
-            Text="{Binding DettaglioDocumento.SpDx, Mode=TwoWay}"
+            Text="{Binding MainPageInput.SpDx, Mode=TwoWay}"
             VerticalOptions="Center" />
         <StackLayout
             Grid.Row="4"
@@ -158,7 +158,7 @@
             Spacing="10">
             <controls:CustomCheckBox
                 Command="{Binding EseguiAggiornaEtichettaCommand}"
-                IsChecked="{Binding DettaglioDocumento.AperturaCentrale}" />
+                IsChecked="{Binding MainPageInput.AperturaCentrale}" />
             <Label
                 Text="Apertura Centrale"
                 VerticalOptions="Center" />
@@ -177,7 +177,7 @@
             HorizontalOptions="FillAndExpand"
             IsClearButtonVisible="False"
             ItemsSource="{Binding ControlliInterfaccia.ListaComandi}"
-            SelectedItem="{Binding DettaglioDocumento.Comandi}"
+            SelectedItem="{Binding MainPageInput.Comandi}"
             SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
             VerticalOptions="Center" />
         <Label
@@ -191,7 +191,7 @@
             Command="{Binding EseguiAggiornaEtichettaCommand}"
             HeightRequest="40"
             HorizontalOptions="FillAndExpand"
-            Text="{Binding DettaglioDocumento.Hc, Mode=TwoWay}"
+            Text="{Binding MainPageInput.Hc, Mode=TwoWay}"
             VerticalOptions="Center" />
         <Label
             Grid.Row="5"
@@ -230,7 +230,7 @@
             HorizontalOptions="FillAndExpand"
             IsClearButtonVisible="False"
             ItemsSource="{Binding ControlliInterfaccia.ListaAttacchi}"
-            SelectedItem="{Binding DettaglioDocumento.Attacchi}"
+            SelectedItem="{Binding MainPageInput.Attacchi}"
             SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
             VerticalOptions="Center" />
         <Label
@@ -244,7 +244,7 @@
             Command="{Binding EseguiAggiornaEtichettaCommand}"
             HeightRequest="40"
             HorizontalOptions="FillAndExpand"
-            Text="{Binding DettaglioDocumento.Pezzi, Mode=TwoWay}"
+            Text="{Binding MainPageInput.Pezzi, Mode=TwoWay}"
             VerticalOptions="Center" />
         <Label
             Grid.Row="6"
@@ -257,7 +257,7 @@
             Command="{Binding EseguiAggiornaEtichettaCommand}"
             HeightRequest="40"
             HorizontalOptions="FillAndExpand"
-            Text="{Binding DettaglioDocumento.Rif, Mode=TwoWay}"
+            Text="{Binding MainPageInput.Rif, Mode=TwoWay}"
             VerticalOptions="Center" />
         <Label
             Grid.Row="7"
@@ -271,7 +271,7 @@
             HeightRequest="40"
             HorizontalOptions="FillAndExpand"
             ItemsSource="{Binding ControlliInterfaccia.ListaNote}"
-            SelectedItem="{Binding DettaglioDocumento.Note}"
+            SelectedItem="{Binding MainPageInput.Note}"
             SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
             VerticalOptions="Center" />
         <StackLayout

@@ -19,8 +19,13 @@ using Microsoft.Maui.Graphics.Platform;
 
 namespace Pseven.Etichette
 {
-    public class EtichettaVeneziane15mm(Etichetta etichetta) : EtichettaDrawBase(etichetta.Larghezza, etichetta.Altezza) ,IDrawable
+    public class EtichettaVeneziane15mm(Etichetta etichetta) : EtichettaDrawBase(etichetta) ,IDrawable
     {
+
+        protected override void DrawSpecific(ICanvas canvas, RectF dirtyRect)
+        {
+
+        }
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
 

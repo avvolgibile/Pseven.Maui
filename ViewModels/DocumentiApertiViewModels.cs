@@ -94,10 +94,10 @@ namespace Pseven.ViewModels
     ////    //try
     ////    //{
     ////    //    using var client = new HttpClient();
-    ////    //    var result = await client.GetFromJsonAsync<List<DettaglioDocumento>>("https://localhost:7208/api/DettaglioDocumento");
+    ////    //    var result = await client.GetFromJsonAsync<List<MainPageInput>>("https://localhost:7208/api/MainPageInput");
 
     ////    //    if (result is not null)
-    ////    //        Documenti = new ObservableCollection<DettaglioDocumento>(result);
+    ////    //        Documenti = new ObservableCollection<MainPageInput>(result);
     ////    //}
     ////    //catch (Exception ex)
     ////    //{

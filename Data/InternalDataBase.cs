@@ -22,7 +22,7 @@ namespace Pseven.Data
 
             DataBase = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
             await DataBase.CreateTableAsync<Documento>();
-            await DataBase.CreateTableAsync<DettaglioDocumento>();
+            await DataBase.CreateTableAsync<MainPageInput>();
             await DataBase.CreateTableAsync<Cliente>();
             await DataBase.CreateTableAsync<Articolo>();
             await DataBase.CreateTableAsync<ArticoloNote>();

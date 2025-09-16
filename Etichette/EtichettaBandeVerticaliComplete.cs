@@ -1,12 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Maui.Graphics.Skia;
+using Pseven.Models;
+using Pseven.Services;
+using SkiaSharp;
+using ZXing;
+using static System.Net.Mime.MediaTypeNames;
+using Font = Microsoft.Maui.Graphics.Font;
 
 namespace Pseven.Etichette
 {
-    public class EtichettaBandeVerticaliComplete
+    public class EtichettaBandeVerticaliComplete(Etichetta etichetta) : EtichettaDrawBase(etichetta)
     {
+
+        protected override void DrawSpecific(ICanvas canvas, RectF dirtyRect)
+        {
+
+        }
     }
 }

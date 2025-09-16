@@ -519,7 +519,7 @@ namespace Pseven.Models
         public Cliente Cliente { get; set; } = new();
         public string? NomeAgente { get; set; }
         [OneToMany]
-        public List<DettaglioDocumento> DettagliDocumento { get; set; } = [];
+        public List<MainPageInput> DettagliDocumento { get; set; } = [];
         public DateTime DataDocumento { get; set; }
 
         public bool IsSospeso { get; set; }
@@ -530,11 +530,11 @@ namespace Pseven.Models
 
 
 
-    public class DettaglioDocumento
-    {
+    public class MainPageInput// e'il contenitore dei dati che l'utente inserisce nella main page .Ogni Entry che hai nella page corrisponde (va a riempire) ad una proprietà di questa classe
+    {                               //quando l' utente digita o aggiorna qualcosa il binding aggiorna subito i valori delle proprietà
 
         [PrimaryKey, AutoIncrement]
-        public int DettaglioDocumentoId { get; set; }
+        public int MainPageInputId { get; set; }
         [ForeignKey(typeof(Documento))]
         public int DocumentoId { get; set; }
         public string? RagioneSociale { get; set; }
@@ -555,7 +555,7 @@ namespace Pseven.Models
         public double AltezzaEffettiva { get; set; }
         public double Quantita { get; set; }
         public int Pezzi { get; set; } = 1;
-        public bool LuceFinita { get; set; } = false;
+        public bool LuceFinita { get; set; } 
         public bool PiuGuide { get; set; } = true;
         public bool AperturaCentrale { get; set; } = false;
         public string SpDx { get; set; } = string.Empty;
@@ -599,6 +599,13 @@ namespace Pseven.Models
         [OneToOne]
         public IDrawable? GraphicsDrawable3 { get; set; }
     }
+  
+    
+    
+    
+    
+    
+    
     public class ControlliInterfaccia
     {
         //Visibilità Controlli
@@ -631,10 +638,14 @@ namespace Pseven.Models
         public Etichetta Etichetta { get; set; } = new();
         public string MessaggioErrore { get; set; } = string.Empty;
     }
+  
+    
+    
+    
+    
     public class Etichetta
     {
-        public int Larghezza { get; set; }
-        public int Altezza { get; set; }
+     
         public string Alias { get; set; } = string.Empty;
         public string Colore { get; set; } = string.Empty;
         public double LuceLEtichetta { get; set; }

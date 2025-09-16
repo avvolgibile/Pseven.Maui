@@ -175,7 +175,7 @@
                             IsEditable="True"
                             IsFilteringEnabled="True"
                             ItemsSource="{Binding Articoli}"
-                            SelectedItem="{Binding DettaglioDocumento.Articolo}"
+                            SelectedItem="{Binding MainPageInput.Articolo}"
                             SelectionChangedCommand="{Binding ArticoloSelezionatoCommand}"
                             Text="{Binding DescrizioneArticolo, Mode=TwoWay}"
                             TextMemberPath="Descrizione" />
@@ -195,7 +195,7 @@
                             HorizontalOptions="FillAndExpand"
                             IsEditable="True"
                             IsFilteringEnabled="True"
-                            ItemsSource="{Binding DettaglioDocumento.Articolo.Colori}"
+                            ItemsSource="{Binding MainPageInput.Articolo.Colori}"
                             SelectedItem="{Binding Colore}"
                             SelectionChangedCommand="{Binding ColoreSelezionatoCommand}"
                             VerticalOptions="Center" />
@@ -255,7 +255,7 @@
                             HorizontalOptions="FillAndExpand"
                             IsEditable="False"
                             ItemsSource="{Binding ControlliInterfaccia.ListaVarie1}"
-                            SelectedItem="{Binding DettaglioDocumento.Varie1}"
+                            SelectedItem="{Binding MainPageInput.Varie1}"
                             SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
                             VerticalOptions="Center" />
                     </StackLayout>
@@ -289,7 +289,7 @@
                             HorizontalOptions="FillAndExpand"
                             IsEditable="False"
                             ItemsSource="{Binding ControlliInterfaccia.ListaVersione}"
-                            SelectedItem="{Binding DettaglioDocumento.Versione}"
+                            SelectedItem="{Binding MainPageInput.Versione}"
                             SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
                             VerticalOptions="Center" />
                     </StackLayout>
@@ -302,7 +302,7 @@
                         Spacing="10">
                         <controls:CustomCheckBox
                             Command="{Binding EseguiAggiornaEtichettaCommand}"
-                            IsChecked="{Binding DettaglioDocumento.AperturaCentrale}" />
+                            IsChecked="{Binding MainPageInput.AperturaCentrale}" />
                         <Label
                             Text="Apertura Centrale"
                             VerticalOptions="Center" />
@@ -313,7 +313,7 @@
                         HeightRequest="30"
                         HorizontalOptions="Center"
                         IsVisible="{Binding ControlliInterfaccia.NoteArtVarieVisible}"
-                        Text="{Binding DettaglioDocumento.NoteArtVarie}"
+                        Text="{Binding MainPageInput.NoteArtVarie}"
                         TextColor="Red"
                         VerticalTextAlignment="Center" />
                     <StackLayout
@@ -330,7 +330,7 @@
                             Command="{Binding EseguiAggiornaEtichettaCommand}"
                             HeightRequest="40"
                             HorizontalOptions="FillAndExpand"
-                            Text="{Binding DettaglioDocumento.LNumber, Mode=TwoWay}"
+                            Text="{Binding MainPageInput.LNumber, Mode=TwoWay}"
                             VerticalOptions="Center" />
                     </StackLayout>
                     <StackLayout
@@ -347,7 +347,7 @@
                             Command="{Binding EseguiAggiornaEtichettaCommand}"
                             HeightRequest="40"
                             HorizontalOptions="FillAndExpand"
-                            Text="{Binding DettaglioDocumento.HNumber, Mode=TwoWay}"
+                            Text="{Binding MainPageInput.HNumber, Mode=TwoWay}"
                             VerticalOptions="Center" />
                     </StackLayout>
                     <StackLayout
@@ -364,7 +364,7 @@
                             Command="{Binding EseguiAggiornaEtichettaCommand}"
                             HeightRequest="40"
                             HorizontalOptions="FillAndExpand"
-                            Text="{Binding DettaglioDocumento.L2Number, Mode=TwoWay}"
+                            Text="{Binding MainPageInput.L2Number, Mode=TwoWay}"
                             VerticalOptions="Center" />
                     </StackLayout>
                     <StackLayout
@@ -381,7 +381,7 @@
                             Command="{Binding EseguiAggiornaEtichettaCommand}"
                             HeightRequest="40"
                             HorizontalOptions="FillAndExpand"
-                            Text="{Binding DettaglioDocumento.SpDx, Mode=TwoWay}"
+                            Text="{Binding MainPageInput.SpDx, Mode=TwoWay}"
                             VerticalOptions="Center" />
                     </StackLayout>
                     <StackLayout
@@ -398,7 +398,7 @@
                             HeightRequest="40"
                             HorizontalOptions="FillAndExpand"
                             ItemsSource="{Binding ControlliInterfaccia.ListaComandi}"
-                            SelectedItem="{Binding DettaglioDocumento.Comandi}"
+                            SelectedItem="{Binding MainPageInput.Comandi}"
                             SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
                             VerticalOptions="Center" />
                     </StackLayout>
@@ -440,7 +440,7 @@
                             HeightRequest="40"
                             HorizontalOptions="FillAndExpand"
                             ItemsSource="{Binding ControlliInterfaccia.ListaAttacchi}"
-                            SelectedItem="{Binding DettaglioDocumento.Attacchi}"
+                            SelectedItem="{Binding MainPageInput.Attacchi}"
                             SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
                             VerticalOptions="Center" />
                     </StackLayout>
@@ -458,7 +458,7 @@
                             Command="{Binding EseguiAggiornaEtichettaCommand}"
                             HeightRequest="40"
                             HorizontalOptions="FillAndExpand"
-                            Text="{Binding DettaglioDocumento.Hc, Mode=TwoWay}"
+                            Text="{Binding MainPageInput.Hc, Mode=TwoWay}"
                             VerticalOptions="Center" />
                     </StackLayout>
                     <StackLayout
@@ -473,7 +473,7 @@
                             Command="{Binding EseguiAggiornaEtichettaCommand}"
                             HeightRequest="40"
                             HorizontalOptions="FillAndExpand"
-                            Text="{Binding DettaglioDocumento.Rif, Mode=TwoWay}"
+                            Text="{Binding MainPageInput.Rif, Mode=TwoWay}"
                             VerticalOptions="Center" />
                     </StackLayout>
                     <StackLayout
@@ -488,7 +488,7 @@
                             Command="{Binding EseguiAggiornaEtichettaCommand}"
                             HeightRequest="40"
                             HorizontalOptions="FillAndExpand"
-                            Text="{Binding DettaglioDocumento.Pezzi, Mode=TwoWay}"
+                            Text="{Binding MainPageInput.Pezzi, Mode=TwoWay}"
                             VerticalOptions="Center" />
                     </StackLayout>
                     <StackLayout
@@ -503,7 +503,7 @@
                             HeightRequest="40"
                             HorizontalOptions="FillAndExpand"
                             ItemsSource="{Binding ControlliInterfaccia.ListaNote}"
-                            SelectedItem="{Binding DettaglioDocumento.Note}"
+                            SelectedItem="{Binding MainPageInput.Note}"
                             SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
                             VerticalOptions="Center" />
                     </StackLayout>
@@ -611,7 +611,7 @@
                                     HeightRequest="40"
                                     HorizontalOptions="FillAndExpand"
                                     Scale="0.7"
-                                    Text="{Binding DettaglioDocumento.PrezzoIvato}"
+                                    Text="{Binding MainPageInput.PrezzoIvato}"
                                     VerticalOptions="Center">
                                     <Entry.Triggers>
                                         <DataTrigger
@@ -644,7 +644,7 @@
                                 <Entry
                                     HeightRequest="40"
                                     HorizontalOptions="FillAndExpand"
-                                    Text="{Binding DettaglioDocumento.Prezzo}"
+                                    Text="{Binding MainPageInput.Prezzo}"
                                     VerticalOptions="Center">
                                     <Entry.Triggers>
                                         <DataTrigger
@@ -677,7 +677,7 @@
                                     IsClearButtonVisible="False"
                                     IsEditable="False"
                                     IsFilteringEnabled="False"
-                                    SelectedItem="{Binding DettaglioDocumento.Articolo.Iva, Mode=TwoWay}"
+                                    SelectedItem="{Binding MainPageInput.Articolo.Iva, Mode=TwoWay}"
                                     WidthRequest="70">
                                     <controls:CustomSfComboBox.ItemsSource>
                                         <x:Array Type="{x:Type x:String}">
@@ -736,12 +736,12 @@
                             <Label Text="Costo Meccanica" />
                             <controls:CustomEntry
                                 HorizontalOptions="FillAndExpand"
-                                Text="{Binding DettaglioDocumento.CostoMeccanica}"
+                                Text="{Binding MainPageInput.CostoMeccanica}"
                                 VerticalOptions="Center" />
                             <Label Text="Costo Tessuto" />
                             <controls:CustomEntry
                                 HorizontalOptions="FillAndExpand"
-                                Text="{Binding DettaglioDocumento.CostoTessuto}"
+                                Text="{Binding MainPageInput.CostoTessuto}"
                                 VerticalOptions="Center" />
                             <Label Text="Q.ta x Collo" />
                             <controls:CustomEntry
@@ -821,7 +821,7 @@
                                     Spacing="10">
                                     <Entry
                                         HorizontalOptions="FillAndExpand"
-                                        Text="{Binding DettaglioDocumento.Supplemento1Pezzi}"
+                                        Text="{Binding MainPageInput.Supplemento1Pezzi}"
                                         VerticalOptions="Center" />
                                     <Label
                                         Text="Pz. Suppl"
@@ -833,7 +833,7 @@
                                     Spacing="10">
                                     <Entry
                                         HorizontalOptions="FillAndExpand"
-                                        Text="{Binding DettaglioDocumento.Supplemento1Quantita}"
+                                        Text="{Binding MainPageInput.Supplemento1Quantita}"
                                         VerticalOptions="Center" />
                                     <Label
                                         Text="Qnt. Suppl"
@@ -845,7 +845,7 @@
                                     Spacing="10">
                                     <Entry
                                         HorizontalOptions="FillAndExpand"
-                                        Text="{Binding DettaglioDocumento.Supplemento1Prezzo}"
+                                        Text="{Binding MainPageInput.Supplemento1Prezzo}"
                                         VerticalOptions="Center" />
                                     <Label
                                         Text="Costo + iva"
@@ -857,7 +857,7 @@
                                     Spacing="10">
                                     <Entry
                                         HorizontalOptions="FillAndExpand"
-                                        Text="{Binding DettaglioDocumento.Supplemento1PrezzoTotale}"
+                                        Text="{Binding MainPageInput.Supplemento1PrezzoTotale}"
                                         VerticalOptions="Center" />
                                     <Label
                                         Text="Tot + iva"
@@ -875,7 +875,7 @@
                                     Spacing="10">
                                     <Entry
                                         HorizontalOptions="FillAndExpand"
-                                        Text="{Binding DettaglioDocumento.Supplemento2Pezzi}"
+                                        Text="{Binding MainPageInput.Supplemento2Pezzi}"
                                         VerticalOptions="Center" />
                                     <Label
                                         Text="Pz. Suppl"
@@ -887,7 +887,7 @@
                                     Spacing="10">
                                     <Entry
                                         HorizontalOptions="FillAndExpand"
-                                        Text="{Binding DettaglioDocumento.Supplemento2Quantita}"
+                                        Text="{Binding MainPageInput.Supplemento2Quantita}"
                                         VerticalOptions="Center" />
                                     <Label
                                         Text="Qnt. Suppl"
@@ -899,7 +899,7 @@
                                     Spacing="10">
                                     <Entry
                                         HorizontalOptions="FillAndExpand"
-                                        Text="{Binding DettaglioDocumento.Supplemento2Prezzo}"
+                                        Text="{Binding MainPageInput.Supplemento2Prezzo}"
                                         VerticalOptions="Center" />
                                     <Label
                                         Text="Costo + iva"
@@ -911,7 +911,7 @@
                                     Spacing="10">
                                     <Entry
                                         HorizontalOptions="FillAndExpand"
-                                        Text="{Binding DettaglioDocumento.Supplemento2PrezzoTotale}"
+                                        Text="{Binding MainPageInput.Supplemento2PrezzoTotale}"
                                         VerticalOptions="Center" />
                                     <Label
                                         Text="Tot + iva"
@@ -930,10 +930,10 @@
                                     Text="Qnt"
                                     VerticalOptions="Center" />
                                 <Label
-                                    Text="{Binding DettaglioDocumento.Articolo.Misura}"
+                                    Text="{Binding MainPageInput.Articolo.Misura}"
                                     VerticalOptions="Center" />
                                 <Entry
-                                    Text="{Binding DettaglioDocumento.Quantita}"
+                                    Text="{Binding MainPageInput.Quantita}"
                                     VerticalOptions="Center"
                                     WidthRequest="150" />
                             </StackLayout>
@@ -967,7 +967,7 @@
                             Scale="0.7"
                             HorizontalOptions="FillAndExpand"
                             ItemsSource="{Binding ControlliInterfaccia.ListaSupplemento1}"
-                            SelectedItem="{Binding DettaglioDocumento.Supplemento1}"
+                            SelectedItem="{Binding MainPageInput.Supplemento1}"
                             SelectionChangedCommand="{Binding Supplemento1SelezionatoCommand}"
                             VerticalOptions="Center" />
                         <Label
@@ -977,7 +977,7 @@
                             Scale="0.8"
                             HorizontalOptions="FillAndExpand"
                             ItemsSource="{Binding ControlliInterfaccia.ListaSupplemento1Colore}"
-                            SelectedItem="{Binding DettaglioDocumento.Supplemento1Colore}"
+                            SelectedItem="{Binding MainPageInput.Supplemento1Colore}"
                             SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
                             VerticalOptions="Center" />
                         <Label
@@ -987,7 +987,7 @@
                             HeightRequest="40"
                             HorizontalOptions="FillAndExpand"
                             ItemsSource="{Binding ControlliInterfaccia.ListaSupplemento2}"
-                            SelectedItem="{Binding DettaglioDocumento.Supplemento2}"
+                            SelectedItem="{Binding MainPageInput.Supplemento2}"
                             SelectionChangedCommand="{Binding EseguiAggiornaEtichettaCommand}"
                             VerticalOptions="Center" />
                     </StackLayout>
@@ -1058,7 +1058,7 @@
                                         IsClearButtonVisible="False"
                                         IsEditable="False"
                                         ItemsSource="{Binding Categorie}"
-                                        SelectedItem="{Binding DettaglioDocumento.Articolo.Categoria}" />
+                                        SelectedItem="{Binding MainPageInput.Articolo.Categoria}" />
 
                                 </StackLayout>
                                 <StackLayout
@@ -1074,7 +1074,7 @@
                                         IsClearButtonVisible="False"
                                         IsEditable="False"
                                         ItemsSource="{Binding SottoCategorie}"
-                                        SelectedItem="{Binding DettaglioDocumento.Articolo.SubCateg}" />
+                                        SelectedItem="{Binding MainPageInput.Articolo.SubCateg}" />
                                 </StackLayout>
                                 <Button Text="Rispristina Filtro" />
                             </StackLayout>
@@ -1120,7 +1120,7 @@
                         AutoSize="Disabled"
                         IsReadOnly="True"
                         MinimumHeightRequest="100"
-                        Text="{Binding DettaglioDocumento.Articolo.NoteDb}"
+                        Text="{Binding MainPageInput.Articolo.NoteDb}"
                         VerticalOptions="FillAndExpand" />
                     <Label Text="Email a fornitori" />
                     <StackLayout

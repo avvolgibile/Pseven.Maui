@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 namespace Pseven.Models;
 
 
-[Table("DettaglioDocumento")]
+[Table("MainPageInput")]
 public partial class StoricoArticolo
 {
 

@@ -4,10 +4,15 @@ using Font = Microsoft.Maui.Graphics.Font;
 
 namespace Pseven.Etichette
 {
-    internal class EtichettaVeneziane50mm(Etichetta etichetta) : EtichettaDrawBase(etichetta.Larghezza, etichetta.Altezza)
+    internal class EtichettaVeneziane50mm(Etichetta etichetta) : EtichettaDrawBase(etichetta)
     {
-        public override void Draw(ICanvas canvas, RectF dirtyRect)
+
+        protected override void DrawSpecific(ICanvas canvas, RectF dirtyRect)
         {
+
+        //}
+        //public override void Draw(ICanvas canvas, RectF dirtyRect)
+        //{
             canvas.Font = new Font("thaoma", 8);
             canvas.DrawString(etichetta.Alias, 5, 9, HorizontalAlignment.Left);
             canvas.DrawString("-50-", 204, 9, HorizontalAlignment.Left);

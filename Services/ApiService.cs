@@ -9,11 +9,11 @@ public class ApiService
 {
     private readonly HttpClient _httpClient = new();
 
-    private const string Url = "https://localhost:7208/api/DettaglioDocumento";
+    private const string Url = "https://localhost:7208/api/MainPageInput";
 
-    public async Task<ObservableCollection<DettaglioDocumento>> GetDocumentiAsync()
+    public async Task<ObservableCollection<MainPageInput>> GetDocumentiAsync()
     {
-        var result = await _httpClient.GetFromJsonAsync<ObservableCollection<DettaglioDocumento>>(Url);
-        return result ?? new ObservableCollection<DettaglioDocumento>();
+        var result = await _httpClient.GetFromJsonAsync<ObservableCollection<MainPageInput>>(Url);
+        return result ?? new ObservableCollection<MainPageInput>();
     }
 }
